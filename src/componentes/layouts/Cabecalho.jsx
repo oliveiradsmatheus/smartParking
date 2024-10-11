@@ -1,9 +1,18 @@
-import { Alert } from "react-bootstrap";
+import { Navbar, Button, Container } from "react-bootstrap";
+import { useState } from "react";
 
 export default function Cabecalho(props) {
+    const [exibirLogin, setExibirLogin] = useState(false);
 
-    // Método Render
     return (
-        <Alert className={"text-center"} variant="light">{props.titulo || "Título não fornecido"}</Alert>
+        <Navbar expand="lg" className="bg-body-primary">
+            <Container>
+                <Navbar.Brand><h3>{props.titulo || "Título não fornecido"}</h3></Navbar.Brand>
+                <Navbar.Toggle />
+                <Navbar.Collapse className="justify-content-end">
+                <Button type="submit" variant="primary">Faça Login</Button>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
     );
 }

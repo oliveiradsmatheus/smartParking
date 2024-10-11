@@ -1,16 +1,17 @@
-import TelaMenu from "./componentes/telas/TelaMenu";
+import Login from "./componentes/telas/Login";
+import Home from "./componentes/telas/Home";
+import Erro404 from "./componentes/telas/Erro404"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { Container } from "react-bootstrap"
 
 function App() {
   return (
-    <Container className="bg-dark text-white">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<TelaMenu />} />
-        </Routes>
-      </BrowserRouter>
-    </Container>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="*" element={<Erro404 />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
