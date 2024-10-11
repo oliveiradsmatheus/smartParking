@@ -1,5 +1,5 @@
 import Pagina from "../layouts/Pagina.jsx"
-import { Alert } from "react-bootstrap"
+import { Alert, Button } from "react-bootstrap"
 
 export default function TelaMenu(props) {
     return (
@@ -8,7 +8,10 @@ export default function TelaMenu(props) {
                 <h2>
                     Tela Menu
                 </h2>
+                <Button variant="danger">
+                    teste
+                </Button>
             </Alert>
         </Pagina>
-    )
+    );
 }
