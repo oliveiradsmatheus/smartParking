@@ -1,22 +1,16 @@
+import TelaMenu from "./componentes/telas/TelaMenu";
 import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { Container } from "react-bootstrap"
 
 function App() {
   return (
-    <div className="App">
+    <Container>
       <BrowserRouter>
         <Routes>
-          <Route path="*" />
+          <Route path="/" element={<TelaMenu />} />
         </Routes>
       </BrowserRouter>
-      <header className="App-header">
-        <p>OK</p>
-        <h2>OK</h2>
-        <h2>OK</h2>
-        <h2>OK</h2>
-      </header>
-
-      <p>TESTE</p>
-    </div>
+    </Container>
   );
 }
 
