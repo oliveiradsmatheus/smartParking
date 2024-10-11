@@ -7,6 +7,8 @@ function App() {
         <h2>OK</h2>
         <h2>OK</h2>
       </header>
+      
+      <p>TESTE</p>
     </div>
   );
 }
