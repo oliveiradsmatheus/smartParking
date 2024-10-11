@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap"
 
 function App() {
   return (
-    <Container>
+    <Container className="bg-dark text-white">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<TelaMenu />} />
