@@ -1,8 +1,23 @@
 import Container from 'react-bootstrap/Container';
 import { Nav, Navbar, NavDropdown, Form, Row, Col, Button } from "react-bootstrap";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function Menu(props) {
+    const navegar = useNavigate();
+    const [pesquisa, setPesquisa] = useState("");
+
+    function procurarRua() {
+        props.setListaBusca(props.listaRuas.filter((item) => {
+            if (item.rua.includes(pesquisa) === true)
+                return item;
+        }));
+        props.setPesquisa(pesquisa);
+    }
+
+    function buscar() {
+        navegar("/busca");
+    }
 
     return (
         <Navbar expand="lg" className="bg-body-tertiary mt-2 mb-2 rounded">
@@ -27,10 +42,17 @@ export default function Menu(props) {
                                 type="text"
                                 placeholder="Pesquise uma rua"
                                 className=" mr-sm-2"
+                                value={pesquisa}
+                                onChange={(evento) => { setPesquisa(evento.target.value) }}
+                                required
                             />
                         </Col>
                         <Col xs="auto">
-                            <Button type="submit" variant="warning">Procurar</Button>
+                            <Button type="submit" variant="warning" onClick={() => {
+                                if (pesquisa) {
+                                    buscar()
+                                }
+                            }}>Procurar</Button>
                         </Col>
                     </Row>
                 </Form>

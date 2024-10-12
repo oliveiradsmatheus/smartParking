@@ -3,7 +3,7 @@ import { Container, Col, Row, Form, Button } from "react-bootstrap";
 export default function Login(props) {
     return (
         <Container className="p-2 mt-2">
-            <Form className="p-3 mt-5 mx-auto rounded bg-body-tertiary" style={{ width: "45rem" }}>
+            <Form className="p-3 mt-5 mx-auto rounded bg-body-tertiary" style={{ width: "50vw" }}>
                 <h3 className="mb-4">Faça Login</h3>
                 <Form.Group className="mt-4 mb-3" controlId="formBasicEmail">
                     <Form.Label>Endereço de e-mail ou nome de usuário</Form.Label>
