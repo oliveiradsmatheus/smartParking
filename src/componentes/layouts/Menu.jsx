@@ -1,13 +1,13 @@
 import Container from 'react-bootstrap/Container';
-import { Nav, Navbar, NavDropdown, Form, Row, Col, Button } from "react-bootstrap"
-import { Link } from "react-router-dom";
+import { Nav, Navbar, NavDropdown, Form, Row, Col, Button } from "react-bootstrap";
+import { Link } from 'react-router-dom';
 
 export default function Menu(props) {
 
     return (
-        <Navbar expand="lg" className="bg-body-tertiary mt-02 mb-02 rounded">
+        <Navbar expand="lg" className="bg-body-tertiary mt-2 mb-2 rounded">
             <Container>
-                <Navbar.Brand href="#" as={Link} to="/">Página Inicial</Navbar.Brand>
+                <Navbar.Brand>Menu</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
@@ -17,7 +17,7 @@ export default function Menu(props) {
                             <NavDropdown.Item href="#action/3.3">Relatório 3</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.4">Relatório 4</NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link href="#">Sobre</Nav.Link>
+                        <Nav.Link href="#" as={Link} to="/sobre">Sobre</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 <Form inline>

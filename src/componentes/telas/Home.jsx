@@ -1,5 +1,5 @@
-import Pagina from "../layouts/Pagina.jsx"
-import { Alert, Container, Card, CardText } from "react-bootstrap"
+import Pagina from "../layouts/Pagina.jsx";
+import { Alert, Container, Card, CardText } from "react-bootstrap";
 
 export default function Home(props) {
 
@@ -7,13 +7,13 @@ export default function Home(props) {
     return (
         <Pagina>
             <Container>
-                <Alert className="mt-4 mb-4 success text-center" variant="secondary">
+                <Alert className="mt-4 mb-4 text-center" variant="secondary">
                     <h2>
                         SMART PARKING
                     </h2>
                 </Alert>
-                <Card style={{ width: "60rem" }} className="mx-auto">
-                    <CardText className="p-4 mx-auto text-center">
+                <Card style={{ width: "65rem" }} className="mx-auto">
+                    <CardText className="p-4 text-center">
                         <h4>
                             Seja bem-vindo ao Smart Parking, o estacionamento inteligente!
                         </h4>
