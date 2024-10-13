@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export default function Cadastro(props) {
     const usuarioVazio = {
-        cpf: "",
+        login: "",
         nome: "",
         endereco: "",
         numero: "",
@@ -11,11 +11,11 @@ export default function Cadastro(props) {
         cidade: "",
         uf: "",
         cep: "",
+        senha: ""
     };
 
     const [formValidado, setFormValidado] = useState(false);
-    const estadoUsuario = usuarioVazio;
-    const [usuario, setUsuario] = useState(estadoUsuario);
+    const [usuario, setUsuario] = useState(usuarioVazio);
     const [senha, setSenha] = useState("");
     const [senha2, setSenha2] = useState("");
 
@@ -27,10 +27,14 @@ export default function Cadastro(props) {
         const form = evento.currentTarget;
         if (form.checkValidity()) {
             if (confirmarSenha()) {
-                props.setListaDeUsuarios([...props.listaDeUsuarios, usuario]);
+                usuario.senha = senha;
+                props.setListaUsuarios([...props.listaUsuarios, usuario]);
                 props.setExibirLogin(true);
                 setUsuario(usuarioVazio);
                 setFormValidado(false);
+            }
+            else {
+                setFormValidado(true);
             }
         } else {
             setFormValidado(true);
@@ -91,7 +95,7 @@ export default function Cadastro(props) {
                                             <Form.Control
                                                 type="password"
                                                 id="senha"
-                                                name="login"
+                                                name="senha"
                                                 placeholder="Digite sua nova senha"
                                                 value={senha}
                                                 onChange={(evento) => { setSenha(evento.target.value) }}
@@ -103,7 +107,7 @@ export default function Cadastro(props) {
                                             <Form.Control
                                                 type="password"
                                                 id="confirmacaoSenha"
-                                                name="senha"
+                                                name="confirmacaoSenha"
                                                 placeholder="Digite a mesma senha"
                                                 value={senha2}
                                                 onChange={(evento) => { setSenha2(evento.target.value) }}
