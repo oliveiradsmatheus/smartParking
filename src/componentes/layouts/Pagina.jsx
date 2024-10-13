@@ -5,13 +5,8 @@ import Rodape from "./Rodape.jsx";
 export default function Pagina(props) {
     return (
         <div>
-            <Cabecalho
-                titulo="Smart Parking" />
-            <Menu
-                listaRuas={props.listaRuas}
-                setPesquisa={props.setPesquisa}
-                setListaBusca={props.setListaBusca}
-                setExibirBusca={props.setExibirBusca} />
+            <Cabecalho titulo="Smart Parking" />
+            <Menu />
             {
                 props.children
             }

@@ -14,7 +14,9 @@ export default function Login(props) {
                     <Form.Control type="password" placeholder="Password" required />
                 </Form.Group>
                 <Row className="mx-auto">
-                    <Button variant="primary" type="submit" className="text-center mb-2">
+                    <Button variant="primary" type="submit" className="text-center mb-2" onClick={() => {
+                        props.setUsuarioLogado(true);
+                    }}>
                         Entrar
                     </Button>
                 </Row>

@@ -1,13 +1,19 @@
-import { Card } from "react-bootstrap";
+import { Button, Container, CardText } from "react-bootstrap";
 
-export default function Busca(props) {
+export default function Rua(props) {
     return (
-        <Card className="bg-light">
-            <Card.Text>{props.rua.nome}</Card.Text>
-            <Card.Text>{props.rua.bairro}</Card.Text>
-            <Card.Text>{props.rua.cidade}</Card.Text>
-            <Card.Text>{props.rua.uf}</Card.Text>
-            <Card.Text>{props.rua.qtVagas}</Card.Text>
-        </Card>
+        <Container className="p-3">
+            <CardText>
+                <p>{props.rua.id} - {props.rua.nome}, {props.rua.bairro} </p>
+                <p>{props.rua.cidade} - {props.rua.uf}</p>
+                <p>Quantidade de Vagas: {props.rua.qtVagas}</p>
+            </CardText>
+            <Button onClick={() => {
+                props.setRuaSelecionada(props.rua);
+                props.setDetalharRua(true);
+            }}>
+                Selecionar Rua
+            </Button>
+        </Container>
     );
 }   

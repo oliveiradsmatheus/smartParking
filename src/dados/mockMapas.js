@@ -1,5 +1,6 @@
 export const ruas = [
     {
+        "id": 1,
         "nome": "Travessa Rafaelle Pagnozzi",
         "bairro": "Jardim Brasília",
         "cidade": "Presidente Prudente",
@@ -9,6 +10,7 @@ export const ruas = [
         "mapas":["000.jpg","001.jpg","010.jpg","011.jpg","100.jpg","101.jpg","110.jpg","111.jpg"]
     },
     {
+        "id": 2,
         "nome": "Rua Bom Jesus",
         "bairro": "Jardim Brasília",
         "cidade": "Presidente Prudente",

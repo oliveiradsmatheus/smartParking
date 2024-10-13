@@ -8,7 +8,9 @@ export default function Cabecalho(props) {
                 <Navbar.Brand href="#" as={Link} to="/"><h3>{props.titulo || "Título não fornecido"}</h3></Navbar.Brand>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
-                    <Button href="#" as={Link} to="/usuario" variant="primary">Faça Login</Button>
+                    <Button href="#" as={Link} to="/usuario" variant="primary">
+                        Faça Login
+                    </Button>
                 </Navbar.Collapse>
             </Container>
         </Navbar>

@@ -7,12 +7,11 @@ export default function Menu(props) {
     const navegar = useNavigate();
     const [pesquisa, setPesquisa] = useState("");
 
-    function procurarRua() {
-        props.setListaBusca(props.listaRuas.filter((item) => {
-            if (item.rua.includes(pesquisa) === true)
-                return item;
-        }));
-        props.setPesquisa(pesquisa);
+
+    function manipularMudanca(evento) {
+        evento.preventDefault();
+        evento.stopPropagation();
+        setPesquisa(evento.target.value);
     }
 
     function buscar() {
@@ -43,14 +42,14 @@ export default function Menu(props) {
                                 placeholder="Pesquise uma rua"
                                 className=" mr-sm-2"
                                 value={pesquisa}
-                                onChange={(evento) => { setPesquisa(evento.target.value) }}
+                                onChange={(evento) => manipularMudanca(evento)}
                                 required
                             />
                         </Col>
                         <Col xs="auto">
                             <Button type="submit" variant="warning" onClick={() => {
                                 if (pesquisa) {
-                                    buscar()
+                                    buscar();
                                 }
                             }}>Procurar</Button>
                         </Col>
