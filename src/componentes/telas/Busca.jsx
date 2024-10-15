@@ -17,14 +17,14 @@ export default function Busca(props) {
     }, [pesquisa])
 
     return (
-        <Pagina>
+        <Pagina setPesquisa={setPesquisa}>
             <Container>
                 <Alert className="mt-4 mb-4 pt-4 text-center" variant="secondary">
                     <h4>
                         {
                             detalharRua ?
                                 ruaSelecionada.nome :
-                                "Resultados da pesquisa" + pesquisa
+                                "Resultados da pesquisa: " + pesquisa
                         }
                     </h4>
                 </Alert>

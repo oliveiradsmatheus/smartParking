@@ -6,7 +6,7 @@ export default function Pagina(props) {
     return (
         <div>
             <Cabecalho titulo="Smart Parking" />
-            <Menu />
+            <Menu setPesquisa={props.setPesquisa}/>
             {
                 props.children
             }

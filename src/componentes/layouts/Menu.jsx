@@ -6,16 +6,26 @@ import { useState } from 'react';
 export default function Menu(props) {
     const navegar = useNavigate();
     const [pesquisa, setPesquisa] = useState("");
+    const [formValidado, setFormValidado] = useState(false);
 
-
-    function manipularMudanca(evento) {
+    function manipularSubmissao(evento) {
+        const form = evento.currentTarget;
+        if (form.checkValidity()) {
+            navegar("/busca");
+            props.setPesquisa(pesquisa);
+            setPesquisa("");
+            setFormValidado(false);
+        } else {
+            setFormValidado(true);
+        }
         evento.preventDefault();
         evento.stopPropagation();
-        setPesquisa(evento.target.value);
     }
 
-    function buscar() {
-        navegar("/busca");
+    function manipularMudanca(evento) {
+        setPesquisa(evento.target.value);
+        evento.preventDefault();
+        evento.stopPropagation();
     }
 
     return (
@@ -34,7 +44,7 @@ export default function Menu(props) {
                         <Nav.Link href="#" as={Link} to="/sobre">Sobre</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
-                <Form inline>
+                <Form inline noValidate validated={formValidado} onSubmit={manipularSubmissao}>
                     <Row>
                         <Col xs="auto">
                             <Form.Control
@@ -47,11 +57,7 @@ export default function Menu(props) {
                             />
                         </Col>
                         <Col xs="auto">
-                            <Button type="submit" variant="warning" onClick={() => {
-                                if (pesquisa) {
-                                    buscar();
-                                }
-                            }}>Procurar</Button>
+                            <Button type="submit" variant="warning">Procurar</Button>
                         </Col>
                     </Row>
                 </Form>
