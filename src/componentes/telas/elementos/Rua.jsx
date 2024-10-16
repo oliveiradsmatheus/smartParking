@@ -13,7 +13,7 @@ export default function Rua(props) {
             <Button onClick={() => {
                 const url = "/rua?cod=" + props.rua.id;
                 props.setRuaSelecionada(props.rua);
-                props.setDetalharRua(true);
+                //props.setDetalharRua(true);
                 navegar(url);
             }}>
                 Selecionar Rua
