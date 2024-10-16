@@ -17,7 +17,7 @@ export const ruas = [
         "cidade": "Presidente Prudente",
         "uf": "SP",
         "qtVagas": "2",
-        "vagas": ["00","01","10","11"],
+        "vagas": sensor1,
         "mapas":["00.jpg","01.jpg","10.jpg","11.jpg"]
     },
     {
@@ -27,7 +27,7 @@ export const ruas = [
         "cidade": "Presidente Prudente",
         "uf": "SP",
         "qtVagas": "2",
-        "vagas": ["00","01","10","11"],
+        "vagas": sensor1,
         "mapas":["00.jpg","01.jpg","10.jpg","11.jpg"]
     },
     {
@@ -37,7 +37,7 @@ export const ruas = [
         "cidade": "Presidente Prudente",
         "uf": "SP",
         "qtVagas": "2",
-        "vagas": ["00","01","10","11"],
+        "vagas": sensor1,
         "mapas":["00.jpg","01.jpg","10.jpg","11.jpg"]
     },
     {
@@ -47,7 +47,7 @@ export const ruas = [
         "cidade": "Presidente Prudente",
         "uf": "SP",
         "qtVagas": "2",
-        "vagas": ["00","01","10","11"],
+        "vagas": sensor1,
         "mapas":["00.jpg","01.jpg","10.jpg","11.jpg"]
     },
     {
@@ -57,7 +57,7 @@ export const ruas = [
         "cidade": "Presidente Prudente",
         "uf": "SP",
         "qtVagas": "2",
-        "vagas": ["00","01","10","11"],
+        "vagas": sensor1,
         "mapas":["00.jpg","01.jpg","10.jpg","11.jpg"]
     },
     {
@@ -67,7 +67,7 @@ export const ruas = [
         "cidade": "Presidente Prudente",
         "uf": "SP",
         "qtVagas": "2",
-        "vagas": ["00","01","10","11"],
+        "vagas": sensor1,
         "mapas":["00.jpg","01.jpg","10.jpg","11.jpg"]
     },
     {
@@ -77,7 +77,7 @@ export const ruas = [
         "cidade": "Presidente Prudente",
         "uf": "SP",
         "qtVagas": "2",
-        "vagas": ["00","01","10","11"],
+        "vagas": sensor1,
         "mapas":["00.jpg","01.jpg","10.jpg","11.jpg"]
     }
 ];
