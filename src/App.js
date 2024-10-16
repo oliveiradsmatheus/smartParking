@@ -4,12 +4,13 @@ import Usuario from "./componentes/telas/Usuario";
 import Home from "./componentes/telas/Home";
 import Erro404 from "./componentes/telas/Erro404";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import DetalharRua from "./componentes/telas/DetalharRua";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/rua" element={<Busca />} />
+        <Route path="/rua" element={<DetalharRua />} />
         <Route path="/busca" element={<Busca />} />
         <Route path="/sobre" element={<Sobre />} />
         <Route path="/usuario" element={<Usuario />} />
