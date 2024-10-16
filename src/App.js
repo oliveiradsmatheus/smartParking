@@ -1,3 +1,4 @@
+import DetalharRua from "./componentes/telas/DetalharRua";
 import Busca from "./componentes/telas/Busca";
 import Sobre from "./componentes/telas/Sobre";
 import Usuario from "./componentes/telas/Usuario";
@@ -9,7 +10,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/rua" element={<Busca />} />
+        <Route path="/rua" element={<DetalharRua />} />
         <Route path="/busca" element={<Busca />} />
         <Route path="/sobre" element={<Sobre />} />
         <Route path="/usuario" element={<Usuario />} />

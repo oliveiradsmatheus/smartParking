@@ -11,7 +11,7 @@ export default function Rua(props) {
                 <p>Quantidade de Vagas: {props.rua.qtVagas}</p>
             </CardText>
             <Button onClick={() => {
-                const url = "/rua?" + props.rua.id;
+                const url = "/rua?cod=" + props.rua.id;
                 props.setRuaSelecionada(props.rua);
                 props.setDetalharRua(true);
                 navegar(url);

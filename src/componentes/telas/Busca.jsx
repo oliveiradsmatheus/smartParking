@@ -8,7 +8,6 @@ import { useState } from "react";
 export default function Busca(props) {
     const [listaRuas, setListaRuas] = useState(ruas);
     const [ruaSelecionada, setRuaSelecionada] = useState("");
-    const [detalharRua, setDetalharRua] = useState(false);
     const [pesquisa, setPesquisa] = useState("");
 
     const busca = listaRuas.filter((rua) => {
@@ -39,21 +38,15 @@ export default function Busca(props) {
                 <Card style={{ width: "65rem" }} className="mx-auto">
                     <CardText className="p-4 text-center">
                         {
-                            detalharRua ?
-                                <DetalharRua
-                                    ruaSelecionada={ruaSelecionada}
-                                    setRuaSelecionada={setRuaSelecionada}
-                                    setDetalharRua={setDetalharRua} /> :
-                                busca.length ?
-                                    busca.map((rua) => {
-                                        return (
-                                            <Rua
-                                                setDetalharRua={setDetalharRua}
-                                                setRuaSelecionada={setRuaSelecionada}
-                                                rua={rua} />
-                                        );
-                                    }) :
-                                    "Nenhum resultado encontrado."
+                            busca.length ?
+                                busca.map((rua) => {
+                                    return (
+                                        <Rua
+                                            setRuaSelecionada={setRuaSelecionada}
+                                            rua={rua} />
+                                    );
+                                }) :
+                                "Nenhum resultado encontrado."
                         }
                     </CardText>
                 </Card>
