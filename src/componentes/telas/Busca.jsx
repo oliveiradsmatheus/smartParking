@@ -1,33 +1,41 @@
 import Pagina from "../layouts/Pagina.jsx";
 import Rua from "../telas/elementos/Rua.jsx"
 import DetalharRua from "./elementos/DetalharRua.jsx";
-import { Alert, Container, Card, CardText } from "react-bootstrap";
+import { Card, CardText, Container, Form, InputGroup } from "react-bootstrap";
 import { ruas } from "../../dados/mockMapas.js";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Busca(props) {
     const [listaRuas, setListaRuas] = useState(ruas);
-    const [listaBusca, setListaBusca] = useState([]);
     const [ruaSelecionada, setRuaSelecionada] = useState("");
     const [detalharRua, setDetalharRua] = useState(false);
     const [pesquisa, setPesquisa] = useState("");
 
-    useEffect(() => {
-        console.log("teste");
-    }, [pesquisa])
+    const busca = listaRuas.filter((rua) => {
+        const ruaLC = rua.nome.toLowerCase();
+        const pesquisaLC = pesquisa.toLowerCase();
+        if (ruaLC.includes(pesquisaLC))
+            return rua;
+    });
+
+    function manipularMudanca(evento) {
+        setPesquisa(evento.target.value);
+    }
 
     return (
-        <Pagina setPesquisa={setPesquisa}>
+        <Pagina>
             <Container>
-                <Alert className="mt-4 mb-4 pt-4 text-center" variant="secondary">
-                    <h4>
-                        {
-                            detalharRua ?
-                                ruaSelecionada.nome :
-                                "Resultados da pesquisa: " + pesquisa
-                        }
-                    </h4>
-                </Alert>
+                <Card style={{ width: "65rem" }} className="mx-auto m-4 pt-4 text-center bg-body-tertiary">
+                    <InputGroup className="ps-4 pe-4 pb-4 pt-1">
+                        <Form.Control
+                            type="text"
+                            id="pesquisa"
+                            placeholder="Nome da rua"
+                            value={pesquisa}
+                            onChange={(evento) => { manipularMudanca(evento) }}
+                        />
+                    </InputGroup>
+                </Card>
                 <Card style={{ width: "65rem" }} className="mx-auto">
                     <CardText className="p-4 text-center">
                         {
@@ -36,14 +44,16 @@ export default function Busca(props) {
                                     ruaSelecionada={ruaSelecionada}
                                     setRuaSelecionada={setRuaSelecionada}
                                     setDetalharRua={setDetalharRua} /> :
-                                listaRuas?.map((rua) => {
-                                    return (
-                                        <Rua
-                                            setDetalharRua={setDetalharRua}
-                                            setRuaSelecionada={setRuaSelecionada}
-                                            rua={rua} />
-                                    );
-                                })
+                                busca.length ?
+                                    busca.map((rua) => {
+                                        return (
+                                            <Rua
+                                                setDetalharRua={setDetalharRua}
+                                                setRuaSelecionada={setRuaSelecionada}
+                                                rua={rua} />
+                                        );
+                                    }) :
+                                    "Nenhum resultado encontrado."
                         }
                     </CardText>
                 </Card>
