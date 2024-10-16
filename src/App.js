@@ -9,6 +9,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/rua" element={<Busca />} />
         <Route path="/busca" element={<Busca />} />
         <Route path="/sobre" element={<Sobre />} />
         <Route path="/usuario" element={<Usuario />} />

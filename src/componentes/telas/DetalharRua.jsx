@@ -11,6 +11,7 @@ export default function DetalharRua(props) {
             <Button onClick={() => {
                 props.setDetalharRua(false);
                 props.setRuaSelecionada("");
+                
             }}>
                 Voltar
             </Button>

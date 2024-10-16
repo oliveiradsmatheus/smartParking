@@ -1,6 +1,6 @@
 import Pagina from "../layouts/Pagina.jsx";
 import Rua from "../telas/elementos/Rua.jsx"
-import DetalharRua from "./elementos/DetalharRua.jsx";
+import DetalharRua from "./DetalharRua.jsx";
 import { Card, CardText, Container, Form, InputGroup } from "react-bootstrap";
 import { ruas } from "../../dados/mockMapas.js";
 import { useState } from "react";
