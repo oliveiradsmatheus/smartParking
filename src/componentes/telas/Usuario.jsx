@@ -1,8 +1,8 @@
 import Pagina from "../layouts/Pagina";
 import Login from "./formularios/Login";
 import Cadastro from "./formularios/Cadastro";
-import { useState } from "react";
 import DadosUsuario from "./elementos/DadosUsuario";
+import { useState } from "react";
 import { usuarios } from "../../dados/mockUsuarios";
 
 export default function Usuario(props) {

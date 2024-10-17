@@ -1,4 +1,4 @@
-import { Button, Container, CardText } from "react-bootstrap";
+import { Button, CardText, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 export default function Rua(props) {

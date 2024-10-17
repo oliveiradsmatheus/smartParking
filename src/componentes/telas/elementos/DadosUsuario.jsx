@@ -1,4 +1,4 @@
-import { Container, CardText, Button } from "react-bootstrap";
+import { Button, CardText, Container } from "react-bootstrap";
 
 export default function DadosUsuario(props) {
     return (

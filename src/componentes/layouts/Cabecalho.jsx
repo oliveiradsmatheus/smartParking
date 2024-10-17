@@ -1,4 +1,4 @@
-import { Navbar, Button, Container } from "react-bootstrap";
+import { Button, Container, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default function Cabecalho(props) {

@@ -1,4 +1,5 @@
 import { sensor1 } from "./mockSensores";
+
 export const ruas = [
     {
         "id": 1,
@@ -8,7 +9,7 @@ export const ruas = [
         "uf": "SP",
         "qtVagas": "3",
         "vagas": sensor1,
-        "mapas":["000.jpg","001.jpg","010.jpg","011.jpg","100.jpg","101.jpg","110.jpg","111.jpg"]
+        "mapa":"https://static.vecteezy.com/ti/vetor-gratis/p1/12216749-mapa-da-cidade-com-ponto-de-destino-vetor.jpg"
     },
     {
         "id": 2,
@@ -18,7 +19,7 @@ export const ruas = [
         "uf": "SP",
         "qtVagas": "2",
         "vagas": sensor1,
-        "mapas":["00.jpg","01.jpg","10.jpg","11.jpg"]
+        "mapa":"../assets/imagens/mapas/2.png"
     },
     {
         "id": 3,
@@ -28,7 +29,7 @@ export const ruas = [
         "uf": "SP",
         "qtVagas": "2",
         "vagas": sensor1,
-        "mapas":["00.jpg","01.jpg","10.jpg","11.jpg"]
+        "mapa":["00.jpg","01.jpg","10.jpg","11.jpg"]
     },
     {
         "id": 4,
@@ -38,7 +39,7 @@ export const ruas = [
         "uf": "SP",
         "qtVagas": "2",
         "vagas": sensor1,
-        "mapas":["00.jpg","01.jpg","10.jpg","11.jpg"]
+        "mapa":["00.jpg","01.jpg","10.jpg","11.jpg"]
     },
     {
         "id": 5,
@@ -48,7 +49,7 @@ export const ruas = [
         "uf": "SP",
         "qtVagas": "2",
         "vagas": sensor1,
-        "mapas":["00.jpg","01.jpg","10.jpg","11.jpg"]
+        "mapa":["00.jpg","01.jpg","10.jpg","11.jpg"]
     },
     {
         "id": 6,
@@ -58,7 +59,7 @@ export const ruas = [
         "uf": "SP",
         "qtVagas": "2",
         "vagas": sensor1,
-        "mapas":["00.jpg","01.jpg","10.jpg","11.jpg"]
+        "mapa":["00.jpg","01.jpg","10.jpg","11.jpg"]
     },
     {
         "id": 7,
@@ -68,7 +69,7 @@ export const ruas = [
         "uf": "SP",
         "qtVagas": "2",
         "vagas": sensor1,
-        "mapas":["00.jpg","01.jpg","10.jpg","11.jpg"]
+        "mapa":["00.jpg","01.jpg","10.jpg","11.jpg"]
     },
     {
         "id": 8,
@@ -78,6 +79,6 @@ export const ruas = [
         "uf": "SP",
         "qtVagas": "2",
         "vagas": sensor1,
-        "mapas":["00.jpg","01.jpg","10.jpg","11.jpg"]
+        "mapa":["00.jpg","01.jpg","10.jpg","11.jpg"]
     }
 ];

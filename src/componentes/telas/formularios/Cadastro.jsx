@@ -1,4 +1,4 @@
-import { Container, Form, Button, Row, Col, Card } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useState } from "react";
 
 export default function Cadastro(props) {
