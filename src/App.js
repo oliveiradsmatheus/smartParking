@@ -1,16 +1,23 @@
-import TelaMenu from "./componentes/telas/TelaMenu";
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { Container } from "react-bootstrap"
+import DetalharRua from "./componentes/telas/DetalharRua";
+import Busca from "./componentes/telas/Busca";
+import Sobre from "./componentes/telas/Sobre";
+import Usuario from "./componentes/telas/Usuario";
+import Home from "./componentes/telas/Home";
+import Erro404 from "./componentes/telas/Erro404";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <Container>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<TelaMenu />} />
-        </Routes>
-      </BrowserRouter>
-    </Container>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/rua" element={<DetalharRua />} />
+        <Route path="/busca" element={<Busca />} />
+        <Route path="/sobre" element={<Sobre />} />
+        <Route path="/usuario" element={<Usuario />} />
+        <Route path="/" element={<Home />} />
+        <Route path="*" element={<Erro404 />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

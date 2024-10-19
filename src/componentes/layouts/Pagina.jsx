@@ -1,14 +1,16 @@
-import { Container } from "react-bootstrap";
+import Cabecalho from "./Cabecalho.jsx";
+import Menu from "./Menu.jsx";
+import Rodape from "./Rodape.jsx";
 
 export default function Pagina(props) {
     return (
-        <Container>
-            <header className="App-header">
-                <p>OK</p>
-                <h2>OK</h2>
-                <h2>OK</h2>
-                <h2>OK</h2>
-            </header>
-        </Container>
+        <>
+            <Cabecalho titulo="Smart Parking" />
+            <Menu/>
+            {
+                props.children
+            }
+            <Rodape informacoes={"Trabalho desenvolvido para a disciplina Projeto Integrador I - Prof. Dr. Flávio Pandur Albuquerque Cabral"} />
+        </>
     );
 }
