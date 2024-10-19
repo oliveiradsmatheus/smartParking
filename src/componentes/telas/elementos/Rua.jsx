@@ -12,8 +12,6 @@ export default function Rua(props) {
             </CardText>
             <Button onClick={() => {
                 const url = "/rua?cod=" + props.rua.id;
-                props.setRuaSelecionada(props.rua);
-                //props.setDetalharRua(true);
                 navegar(url);
             }}>
                 Selecionar Rua

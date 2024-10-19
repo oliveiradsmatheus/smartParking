@@ -6,7 +6,6 @@ import { useState } from "react";
 
 export default function Busca(props) {
     const [listaRuas, setListaRuas] = useState(ruas);
-    const [ruaSelecionada, setRuaSelecionada] = useState("");
     const [pesquisa, setPesquisa] = useState("");
 
     const busca = listaRuas.filter((rua) => {
@@ -40,9 +39,7 @@ export default function Busca(props) {
                             busca.length ?
                                 busca.map((rua) => {
                                     return (
-                                        <Rua
-                                            setRuaSelecionada={setRuaSelecionada}
-                                            rua={rua} />
+                                        <Rua rua={rua} />
                                     );
                                 }) :
                                 "Nenhum resultado encontrado."

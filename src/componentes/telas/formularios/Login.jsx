@@ -1,25 +1,31 @@
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function Login(props) {
     const [formValidado, setFormValidado] = useState(false);
     const [usuario, setUsuario] = useState("");
     const [senha, setSenha] = useState("");
 
+    const dispatch = useDispatch();
+    const Logar = (nome) => {
+        dispatch({ type: "LOGAR", payload: nome});
+    };
+
     function validarLogin() {
-        props.listaUsuarios.map((item) => {
-            if (item.login === usuario && item.senha === senha) {
-                props.setUsuarioSelecionado(item);
-                return true;
+        props.listaUsuarios.some((item) => { // A função some verifica se pelo menos um elemento do array satisfaz a condição.
+            if (item.login === usuario && item.senha === senha){
+                Logar(item.nome);
+                return true; // Retorna true se o login e senha corresponderem
             }
-        });
+            return false; // Caso contrário, retorna false
+        });    
     }
 
     function manipularSubmissao(evento) {
         const form = evento.currentTarget;
         if (form.checkValidity()) {
             if (validarLogin() === true) {
-                props.setExibirLogin(false);
                 setFormValidado(false);
             }
             else {
@@ -36,7 +42,7 @@ export default function Login(props) {
     return (
         <Container className="p-2 mt-2">
             <Form noValidate validated={formValidado} onSubmit={manipularSubmissao} className="p-3 mt-5 mx-auto rounded bg-body-tertiary" style={{ width: "50vw" }}>
-                <h3 className="mb-4">Faça Login</h3>
+                <h3 className="mb-4 text-center">Login</h3>
                 <Form.Group className="mt-4 mb-3" controlId="formBasicEmail">
                     <Form.Label>Nome de usuário</Form.Label>
                     <Form.Control
@@ -54,6 +60,9 @@ export default function Login(props) {
                         value={senha}
                         onChange={(evento) => { setSenha(evento.target.value) }}
                         required />
+                    <Form.Control.Feedback type="invalid" className="mt-3">
+                        Usuario ou senha incorretos!
+                    </Form.Control.Feedback>
                 </Form.Group>
                 <Row className="mx-auto">
                     <Button type="submit" variant="primary" className="text-center mb-2">

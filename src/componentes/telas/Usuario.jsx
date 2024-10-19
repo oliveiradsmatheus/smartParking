@@ -4,29 +4,34 @@ import Cadastro from "./formularios/Cadastro";
 import DadosUsuario from "./elementos/DadosUsuario";
 import { useState } from "react";
 import { usuarios } from "../../dados/mockUsuarios";
+import { useSelector } from "react-redux";
 
 export default function Usuario(props) {
     const [listaUsuarios, setListaUsuarios] = useState(usuarios);
     const [exibirLogin, setExibirLogin] = useState(true);
-    const [usuarioSelecionado, setUsuarioSelecionado] = useState("");
+
+    const adminLogado = useSelector((state) => state); // Estado do usuário
 
     return (
         <Pagina>
             {
-                usuarioSelecionado ?
+                adminLogado ?
                     <DadosUsuario
-                        usuarioSelecionado={usuarioSelecionado}
-                        setUsuarioSelecionado={setUsuarioSelecionado}
-                        setExibirLogin={setExibirLogin} /> :
-                    exibirLogin ?
-                        <Login
-                            listaUsuarios={listaUsuarios}
-                            setUsuarioSelecionado={setUsuarioSelecionado}
-                            setExibirLogin={setExibirLogin} /> :
-                        <Cadastro
-                            listaUsuarios={listaUsuarios}
-                            setListaUsuarios={setListaUsuarios}
-                            setExibirLogin={setExibirLogin} />
+                        adminSelecionado={adminLogado}
+                        setExibirLogin={setExibirLogin}
+                    />
+                :
+                exibirLogin ?
+                    <Login
+                        listaUsuarios={listaUsuarios}
+                        setExibirLogin={setExibirLogin}
+                    />
+                    :
+                    <Cadastro
+                        listaUsuarios={listaUsuarios}
+                        setListaUsuarios={setListaUsuarios}
+                        setExibirLogin={setExibirLogin}
+                    />
             }
         </Pagina>
     );
