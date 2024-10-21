@@ -1,4 +1,4 @@
-import DAO_Rua from "../Persistencia/DAO_Rua.js";
+import DAO_Rua from "../persistencia/DAO_Rua.js";
 
 export default class Categoria{
     #id;
@@ -18,14 +18,6 @@ export default class Categoria{
     set id(novoId) { this.#id = novoId; }
     set nome(novoNome) { this.#nome = novoNome; }
     set qtdVagas(novoQtdVagas) { this.#qtdVagas = novoQtdVagas; }
-
-    toJSON(){
-        return {
-            "id": this.#id,
-            "nome": this.#nome,
-            "qtdVagas": this.#qtdVagas
-        }
-    }
 
     async consultar(){
         const ruaDAO = new DAO_Rua();
