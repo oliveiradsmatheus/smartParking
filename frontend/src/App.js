@@ -17,7 +17,7 @@ function App() {
     useEffect(() => {
         const fetchRuas = async () => {
             try {
-                const resposta = await axios.get("http://localhost:5000/api/ruas");
+                const resposta = await axios.get("http://192.168.177.229:5000/api/ruas");
                 dispatch({ type: "SET_RUAS", payload: resposta.data });
             } catch (error) {
                 console.error("Erro ao buscar ruas:", error);

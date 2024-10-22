@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import rotaRuas from './rotas/Rota_Rua.js'
 import rotaSensores from './rotas/Rota_Sensor.js'
 
-const host = "localhost";
+const host = "192.168.177.229";
 const porta = 5000;
 const app = express();
 dotenv.config();
