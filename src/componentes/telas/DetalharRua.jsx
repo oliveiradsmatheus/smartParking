@@ -1,11 +1,13 @@
 import Pagina from "../layouts/Pagina";
-import { Container, CardText, Button } from "react-bootstrap";
+import { Container, CardText, Card } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { ruas } from "../../dados/mockMapas";
+import styles from "../../style/detalharRua.module.css";
+
 
 export default function DetalharRua(props) {
     const [id, setId] = useState();
-    const [rua, setRua] = useState();
+    const [rua, setRua] = useState(0);
     const [sensores, setSensores] = useState([]);
 
     useEffect(() => {
@@ -18,11 +20,11 @@ export default function DetalharRua(props) {
         if (id !== undefined) {
             const sensoresFiltrados = ruas.filter((rua) => {
                 if (rua.id === id) {
-                    setRua(rua);
                     return rua;
                 }
             });
             setSensores(sensoresFiltrados[0].vagas);
+            setRua(sensoresFiltrados[0])
         }
     }, [id]);
 
@@ -49,14 +51,18 @@ export default function DetalharRua(props) {
                 </Button>*/
                 }
             </Container>
-            <Container className="p-3">
+            <Container className="p-3" style={{display:"flex", justifyContent:"center"}}>
+
+                <div className={styles.mapaRua} style={{ height: sensores.length * 25 + "vh" }}>
+                    {/* <img src={ruaImage} alt="" /> */}
                 {sensores.length > 0 ? (
                     sensores.map((sensor) => (
-                        <p key={sensor.id} style={{ color: sensor.cor }}>{sensor.cor}</p>
+                        <div className={styles.vaga} style={{ borderColor: sensor.cor }}> </div>
                     ))
                 ) : (
                     <p>Nenhum sensor encontrado.</p>
                 )}
+                </div>
             </Container>
         </Pagina>
     )
