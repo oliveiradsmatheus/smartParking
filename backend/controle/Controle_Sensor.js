@@ -5,7 +5,7 @@ export default class Controle_Sensor{
     {
         res.type("application/json");
         if (req.method == "GET") {
-            const termo = req.params.cod_rua;
+            const termo = req.params.rua_id;
             const sensor = new Sensor();
             sensor.consultar(termo)
             .then((listaSensores) => {

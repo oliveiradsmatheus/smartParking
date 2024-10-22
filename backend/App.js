@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import rotaRuas from './persistencia/Rota_Rua.js'
-import rotaSensores from './persistencia/Rota_Sensor.js'
+import rotaRuas from './rotas/Rota_Rua.js'
+import rotaSensores from './rotas/Rota_Sensor.js'
 
 const host = "localhost";
 const porta = 5000;

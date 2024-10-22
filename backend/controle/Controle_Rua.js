@@ -5,8 +5,9 @@ export default class Controle_Rua{
     {
         res.type("application/json");
         if (req.method == "GET") {
+            const termo = req.params.rua_id;
             const rua = new Rua();
-            rua.consultar()
+            rua.consultar(termo)
             .then((listaRuas) => {
                 res.status(200).json(listaRuas);
             })

@@ -16,6 +16,7 @@ export default class DAO_Sensor {
             const sensor = {
                 id: l.sen_id,
                 estado: l.sen_estado,
+                ladoPos: l.sen_ladoPos,
                 idRua: l.rua_id
             };
             listaSensores.push(sensor); // Adicione à listaSensores

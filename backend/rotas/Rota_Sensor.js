@@ -6,6 +6,6 @@ const rota = Router();
 
 rota
 .get("/", sensorControle.consultar)
-.get("/:cod_rua", sensorControle.consultar)
+.get("/:rua_id", sensorControle.consultar)
 
 export default rota;

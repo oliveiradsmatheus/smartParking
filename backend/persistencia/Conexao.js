@@ -7,15 +7,15 @@ export default async function conectar(){
     }
     else{
         global.poolConexoes = mysql.createPool({
-            "host": "localhost",
-            "port": "3306",
-            "database": "smart_parking",
-            "user": "root",
-            "password": "",
-            "connectionLimit": "10",
-            "connectTimeout": "60000",
-            "waitForConnections": "true",
-            "queueLimit": "20"
+            "host": process.env.HOST,
+            "port": process.env.PORTA,
+            "database": process.env.DATABASE,
+            "user": process.env.USER,
+            "password": process.env.PASSWORD,
+            "connectionLimit": 10,
+            "connectTimeout": 60000,
+            "waitForConnections": true,
+            "queueLimit": 20
         });
         return await global.poolConexoes.getConnection();
     }
