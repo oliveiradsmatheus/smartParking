@@ -1,3 +1,4 @@
+import Sensor from '../modelo/Sensor.js';
 import conectar from './Conexao.js';
 
 export default class DAO_Sensor {
@@ -22,5 +23,15 @@ export default class DAO_Sensor {
             listaSensores.push(sensor); // Adicione à listaSensores
         }
         return listaSensores; // Retorne a listaSensores como resposta
+    }
+
+    async atualizarESP(sensor){
+        if(sensor instanceof Sensor){
+            const conexao = await conectar();
+            const sql = `UPDATE sensor SET sen_estado=? WHERE sen_id=?`;
+            const parametros = [sensor.estado, sensor.id];
+            await conexao.execute(sql,parametros);
+            await conexao.release();
+        }
     }
 }

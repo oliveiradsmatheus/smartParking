@@ -25,4 +25,28 @@ export default class Controle_Sensor{
             });
         }
     }
+
+    atualizarESP(req, res) {
+        if (req.method.toUpperCase() === "PUT") {
+            const id = req.params.sen_id;
+            const estado = req.params.sen_estado;
+            if (id && !isNaN(parseInt(id)) && estado) {
+                const sensor = new Sensor(id, estado, "", "");
+                sensor.atualizarESP()
+                .then(() => {
+                    res.status(200).send("Estado Atualizado!");
+                })
+                .catch((erro) => {
+                    console.error(erro);
+                    res.status(500).send(erro);
+                });
+            }
+            else {
+                res.status(400).send("Dados inválidos: 'id'="+id+" e 'estado'="+estado+" são obrigatórios.");
+            }
+        } else {
+            res.status(405).send("Método inválido! Apenas PUT é permitido.");
+        }
+    }
+    
 }
