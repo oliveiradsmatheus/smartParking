@@ -25,8 +25,8 @@ unsigned long timeout = 1000
 
 // Variáveis globais
 int TempoVaga1 = 0, TempoVaga2 = 0, TempoVaga3 = 0;
-char Estado[4] = { 'D', 'D', 'D', 'D' };
-int idSensor[4] = { 0, 1, 2, 3 }, idOcupacao[4] = { 0, 0, 0, 0 };
+char Estado[3] = { 'D', 'D', 'D' };
+int idSensor[3] = { 1, 2, 3 }, idOcupacao[3] = { 0, 0, 0 };
 
 void setup()
 {
@@ -74,7 +74,7 @@ void ExibirDistancia(long Distancia, int num)
 
 void ProcessarRespostaEstado(String msg, int index)
 {
-	if (msg != "" && msg == "OK") // Espera-se a resp = "OK" ou "mensagem de erro do banco"
+	if (msg != "" && msg == "Estado Atualizado!") // Espera-se a resp = "OK" ou "mensagem de erro do banco"
 		Serial.println("req de UPDATE para Estado Sensor <BEM> sucessida!" + " EstadoDB: " + Estado[index]);
 	else
 		Serial.println("req de UPDATE para Estado Sensor <MAL> sucessida!, ERRO: " + msg);
@@ -82,21 +82,25 @@ void ProcessarRespostaEstado(String msg, int index)
 
 void ProcessarRespostaPOST(String msg, int index)
 {
-	int i=0, j=0 id;
-
-	if (msg != "" && msg[i] == 'S') // Espera-se a resp = "S:ID_Ocupacao" ou "mensagem de erro do banco"
-		i+=2;
-	while(msg[i] != '\0') {
-		msg[j] = msg[i];
-		i++;
-		j++;
+	int id;
+	String aux;
+	if (msg != "" && msg[0]=='O' && msg[0]=='K'){ // Espera-se a resp = "S:ID_Ocupacao" ou "mensagem de erro do banco"
+		aux = msg.substring(msg.indexOf(':') + 1);
+		id = atoi(aux.c_str());
+		idOcupacao[index] = id;
+		Serial.println("req de POST para Ocupacao do Sensor <BEM> sucessida!" + " ID_Ocupacao: " + idOcupacao[index]);
 	}
-	msg[j]='\0';
-	id = atoi(msg);
-	idOcupacao[index] = id;
-	Serial.println("req de POST para Ocupacao do Sensor <BEM> sucessida!" + " ID_Ocupacao: " + idOcupacao[index]);
 	else
 		Serial.println("req de POST para Ocupacao do Sensor <MAL> sucessida!, ERRO: " + msg);
+}
+
+void ProcessarRespostaPUT(String msg, int index){
+	if (msg != "" && msg=="Ocupacao Atualizada!"){ // Espera-se a resp = "S:ID_Ocupacao" ou "mensagem de erro do banco"
+		idOcupacao[index] = 0;
+		Serial.println("req de PUT para Ocupacao do Sensor <BEM> sucessida!" + " ID_Ocupacao: " + idOcupacao[index]);
+	}
+	else
+		Serial.println("req de PUT para Ocupacao do Sensor <MAL> sucessida!, ERRO: " + msg);
 }
 
 String EsperarResposta() {
@@ -116,8 +120,8 @@ String EsperarResposta() {
 
 char WifiOn()
 {
-	Serial1.println("ON"); //envia ON pra ver se o wifi esta online
-	return EsperarResposta() == "ON"; //se o wifi esta online recebe ? ON : OFF
+	Serial1.println("on"); //envia ON pra ver se o wifi esta online
+	return EsperarResposta() == "WiFi ON";
 }
 
 void SetLed(int LED_R, int LED_Y, int LED_G, int *TempoVaga, int Distancia, int idSensor, int index)
@@ -126,27 +130,29 @@ void SetLed(int LED_R, int LED_Y, int LED_G, int *TempoVaga, int Distancia, int 
 		digitalWrite(LED_R, LOW);
 		digitalWrite(LED_Y, LOW);
 		digitalWrite(LED_G, HIGH);
-		if (Estado[index] == 'O' && WifiOn()) {
+		if (Estado[index] == 'O') {
 			Estado[index] = 'D';  //req UPDATE para a tabela de sensores ESTADO 'Disponivel'
-
-			String msg = "0:" + String(idSensor[index]) + ":A";  // Formato: PATCH:ID_SENSOR:ESTADO
-			Serial1.println(msg);                                    // Enviar mensagem para o ESP32
-			msg = EsperarResposta(); // Espera-se a resp = "S" ou "mensagem de erro do banco"
-			ProcessarRespostaEstado(msg, index);
-
-			//madar o idOcupacao[index] & req PATCH para a tabela de processos
-			String msg = "1:" + String(idOcupacao[index]);  // Formato: PATCH:ID_Ocupacao
-			Serial1.println(msg);                                    // Enviar mensagem para o ESP32
-			msg = EsperarResposta(); // Espera-se a resp = "S" ou "mensagem de erro do banco"
-			ProcessarRespostaEstado(msg, index);// dentro da func ele ja zera o valor do idOcupacao[index]
-			idOcupacao[index] = 0;
+			if(WifiOn()){
+				String msg = "0:" + String(idSensor[index]) + ":A";  // Formato: PATCH:ID_SENSOR:ESTADO
+				Serial1.println(msg);                                    // Enviar mensagem para o ESP32
+				msg = EsperarResposta(); // Espera-se a resp = "S" ou "mensagem de erro do banco"
+				ProcessarRespostaEstado(msg, index);
+			}
+			if(WifiOn()){//madar o idOcupacao[index] & req PATCH para a tabela de processos
+				String msg = "1:" + String(idOcupacao[index]);  // Formato: PATCH:ID_Ocupacao
+				Serial1.println(msg);                                    // Enviar mensagem para o ESP32
+				msg = EsperarResposta(); // Espera-se a resp = "S" ou "mensagem de erro do banco"
+				ProcessarRespostaPUT(msg, index);// dentro da func ele ja zera o valor do idOcupacao[index]
+			}
 		}
-		else if (Estado[index] == 'A' && WifiOn()) {
+		else if (Estado[index] == 'A') {
 			Estado[index] = 'D';  //req UPDATE para a tabela de sensores ESTADO 'Disponivel'
-			String msg = "0:" + String(idSensor[index]) + ":A";  // Formato: PATCH:ID_SENSOR:ESTADO
-			Serial1.println(msg);                                    // Enviar mensagem para o ESP32
-			msg = EsperarResposta(); // Espera-se a resp = "S" ou "mensagem de erro do banco"
-			ProcessarRespostaEstado(msg, index);
+			if(WifiOn()){
+				String msg = "0:" + String(idSensor[index]) + ":A";  // Formato: PATCH:ID_SENSOR:ESTADO
+				Serial1.println(msg);                                    // Enviar mensagem para o ESP32
+				msg = EsperarResposta(); // Espera-se a resp = "S" ou "mensagem de erro do banco"
+				ProcessarRespostaEstado(msg, index);
+			}
 		}
 	}
 	else if (*TempoVaga < TempoAnalise && Distancia < DistanciaAtivacao) {  //Vaga em Analise
@@ -154,12 +160,14 @@ void SetLed(int LED_R, int LED_Y, int LED_G, int *TempoVaga, int Distancia, int 
 			digitalWrite(LED_R, LOW);
 			digitalWrite(LED_Y, HIGH);
 			digitalWrite(LED_G, LOW);
-			if (Estado[index] == 'D' && WifiOn()) {
-				Estado[index] = 'A';                                     // req UPDATE para a tabela de sensores ESTADO 'Analise'
-				String msg = "0:" + String(idSensor[index]) + ":A";  // Formato: PATCH:ID_SENSOR:ESTADO
-				Serial1.println(msg);                                    // Enviar mensagem para o ESP32
-				msg = EsperarResposta(); // Espera-se a resp = "S" ou "mensagem de erro do banco"
-				ProcessarRespostaEstado(msg, index);
+			if (Estado[index] == 'D') {
+				Estado[index] = 'A';
+				if (WifiOn()){// req UPDATE para a tabela de sensores ESTADO 'Analise'
+					String msg = "0:" + String(idSensor[index]) + ":A";  // Formato: PATCH:ID_SENSOR:ESTADO
+					Serial1.println(msg);                                    // Enviar mensagem para o ESP32
+					msg = EsperarResposta(); // Espera-se a resp = "S" ou "mensagem de erro do banco"
+					ProcessarRespostaEstado(msg, index);
+				}
 			}
 		}
 		if (*TempoVaga < TempoAnalise)
@@ -170,18 +178,20 @@ void SetLed(int LED_R, int LED_Y, int LED_G, int *TempoVaga, int Distancia, int 
 			digitalWrite(LED_R, HIGH);
 			digitalWrite(LED_Y, LOW);
 			digitalWrite(LED_G, LOW);
-			if (Estado[index] == 'A' && WifiOn()) {
-				Estado[index] = 'O';                                    //req UPDATE para a tabela de sensores ESTADO 'Ocupado'
-				String msg = "0:" + String(idSensor[index]) + ":O";  // Formato: PATCH:ID_SENSOR:ESTADO
-				Serial1.println(msg);                                   // Enviar mensagem para o ESP32
-				msg = EsperarResposta();
-				ProcessarRespostaEstado(msg, index);
-
-				if(idOcupacao[index]==0 && WifiOn()) { //mandar idSensor[index], req POST para a tabela de ocupaçoes & idOcupacao[index] = resposta API
-					String msg = "2:" + String(idSensor[index]);  // Formato: POST:ID_SENSOR
-					Serial1.println(msg);                            // Enviar mensagem para o ESP32
+			if (Estado[index] == 'A') {
+				Estado[index] = 'O';
+				if(WifiOn()){
+					String msg = "0:" + String(idSensor[index]) + ":O";  // Formato: PATCH:ID_SENSOR:ESTADO
+					Serial1.println(msg);                                   // Enviar mensagem para o ESP32
 					msg = EsperarResposta();
-					ProcessarRespostaPOST(msg, index);
+					ProcessarRespostaEstado(msg, index);
+
+					if(idOcupacao[index]==0 && WifiOn()) { //mandar idSensor[index], req POST para a tabela de ocupaçoes & idOcupacao[index] = resposta API
+						String msg = "2:" + String(idSensor[index]);  // Formato: POST:ID_SENSOR
+						Serial1.println(msg);                            // Enviar mensagem para o ESP32
+						msg = EsperarResposta(); //req UPDATE para a tabela de sensores ESTADO 'Ocupado'
+						ProcessarRespostaPOST(msg, index);
+					}    
 				}
 			}
 		}
@@ -202,16 +212,16 @@ void loop()
 {
 	// Envia um pulso de 10us no pino de trigger
 	long Distancia1 = MedirDistancia(TRIG_PIN1, ECHO_PIN1);
-	// long Distancia2 = MedirDistancia(TRIG_PIN2, ECHO_PIN2);
-	// long Distancia3 = MedirDistancia(TRIG_PIN3, ECHO_PIN3);
+	long Distancia2 = MedirDistancia(TRIG_PIN2, ECHO_PIN2);
+	long Distancia3 = MedirDistancia(TRIG_PIN3, ECHO_PIN3);
 
 	ExibirDistancia(Distancia1, 1);
-	// ExibirDistancia(Distancia2, 2);
-	// ExibirDistancia(Distancia3, 3);
+	ExibirDistancia(Distancia2, 2);
+	ExibirDistancia(Distancia3, 3);
 
-	SetLed(LED1_R, LED1_Y, LED1_G, &TempoVaga1, Distancia1, idSensor[1], 1);
-	// SetLed(LED2_R, LED2_Y, LED2_G, &TempoVaga2, Distancia2, idSensor[2], 2);
-	// SetLed(LED3_R, LED3_Y, LED3_G, &TempoVaga3, Distancia3, idSensor[3], 3);
+	SetLed(LED1_R, LED1_Y, LED1_G, &TempoVaga1, Distancia1, idSensor[0], 0);
+	SetLed(LED2_R, LED2_Y, LED2_G, &TempoVaga2, Distancia2, idSensor[1], 1);
+	SetLed(LED3_R, LED3_Y, LED3_G, &TempoVaga3, Distancia3, idSensor[2], 2);
 
 	delay(1000);  // Aguarda 1 segundo antes de ler novamente
 }
