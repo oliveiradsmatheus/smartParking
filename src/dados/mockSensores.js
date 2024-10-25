@@ -13,7 +13,7 @@ export const sensor1=[
     },
     {
         "id":"4",
-        "cor":"yellow"
+        "cor":"red"
     },
     {
         "id":"5",
