@@ -13,10 +13,10 @@ INSERT INTO `sensor` (`sen_estado`, `sen_ladoPos`,`rua_id`)
 VALUES
   ('D', 'R1', 'RUA1'),  -- Sensor 1 disponível
   ('O', 'R2', 'RUA1'),  -- Sensor 2 disponível
-  ('M', 'L1', 'RUA1'),  -- Sensor 3 disponível
-  ('D', 'R1', 'RUA2'),  -- Sensor 1 disponível
-  ('A', 'L1', 'RUA2'),  -- Sensor 2 disponível
-  ('O', 'L2', 'RUA2');  -- Sensor 3 disponível
+  ('M', 'L1', 'RUA1');  -- Sensor 3 disponível
+  -- ('D', 'R1', 'RUA2'),  -- Sensor 1 disponível
+  -- ('A', 'L1', 'RUA2'),  -- Sensor 2 disponível
+  -- ('O', 'L2', 'RUA2');  -- Sensor 3 disponível
 
 -- Inserir várias ocupações para o sensor 1
 -- INSERT INTO `ocupacao` (`ocp_dtInicio`, `ocp_dtFim`, `ocp_tempo`, `sen_id`)

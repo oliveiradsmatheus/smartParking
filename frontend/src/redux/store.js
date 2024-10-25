@@ -1,6 +1,6 @@
 import { createStore, combineReducers } from "redux";
-import loginReducer from "./loginReducer"; // Importa o reducer
-import ruaReducer from './ruaReducer'; // Importa o reducer das ruas
+import loginReducer from "./loginRedux"; // Importa o reducer
+import ruaReducer from './ruaRedux'; // Importa o reducer das ruas
 
 const reducerCombinado = combineReducers({
     ruas: ruaReducer,

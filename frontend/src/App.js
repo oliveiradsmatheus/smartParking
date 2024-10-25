@@ -1,9 +1,9 @@
-import DetalharRua from "./componentes/telas/DetalharRua";
-import Busca from "./componentes/telas/Busca";
-import Sobre from "./componentes/telas/Sobre";
-import Usuario from "./componentes/telas/Usuario";
-import Home from "./componentes/telas/Home";
-import Erro404 from "./componentes/telas/Erro404";
+import DetalharRua from "./component/telas/DetalharRua";
+import Busca from "./component/telas/Busca";
+import Sobre from "./component/telas/Sobre";
+import Usuario from "./component/telas/Usuario";
+import Home from "./component/telas/Home";
+import Erro404 from "./component/telas/Erro404";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";

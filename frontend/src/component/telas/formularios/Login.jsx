@@ -31,6 +31,7 @@ export default function Login(props) {
             else {
                 setSenha("");
                 setUsuario("");
+                setFormValidado(false);
             }
         } else {
             setFormValidado(true);
