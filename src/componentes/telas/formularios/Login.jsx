@@ -24,7 +24,15 @@ export default function Login(props) {
 
     function manipularSubmissao(evento) {
         const form = evento.currentTarget;
-        if (form.checkValidity()) {
+        const res = fetch('http://localhost:4000/usuario/user', {
+            'method':"POST",
+            'body':{form},
+            'headers':{
+                'Content-Type':"application/json"
+            }
+        })
+        console.log(res)
+        /*if (form.checkValidity()) {
             if (validarLogin() === true) {
                 setFormValidado(false);
             }
@@ -34,7 +42,7 @@ export default function Login(props) {
             }
         } else {
             setFormValidado(true);
-        }
+        }*/
         evento.preventDefault();
         evento.stopPropagation();
     }
