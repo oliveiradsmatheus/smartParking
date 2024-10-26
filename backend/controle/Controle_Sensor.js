@@ -34,7 +34,7 @@ export default class Controle_Sensor{
                 const sensor = new Sensor(id, estado, "", "");
                 sensor.atualizarESP()
                 .then(() => {
-                    res.status(200).send("Estado Atualizado!");
+                    res.status(200).send("Estado Atualizado");
                 })
                 .catch((erro) => {
                     console.error(erro);
@@ -42,10 +42,10 @@ export default class Controle_Sensor{
                 });
             }
             else {
-                res.status(400).send("Dados inválidos: 'id'="+id+" e 'estado'="+estado+" são obrigatórios.");
+                res.status(400).send("Dados invalidos: 'id'="+id+" e 'estado'="+estado+" sao obrigatorios.");
             }
         } else {
-            res.status(405).send("Método inválido! Apenas PUT é permitido.");
+            res.status(405).send("Metodo invalido, Apenas PUT e permitido.");
         }
     }
     

@@ -43,7 +43,7 @@ export default class Controle_Ocupacao {
                 .then((resJSON) => {
                     const dtInicio = resJSON.dtInicio;
                     if (!dtInicio)
-                        res.status(500).json("Data de Início veio vazia!");
+                        res.status(500).send("Data de Início veio vazia!");
                     else {
                         const dataLocal = new Date();
                         const dtFim = format(dataLocal, 'yyyy-MM-dd HH:mm:ss');
@@ -57,14 +57,14 @@ export default class Controle_Ocupacao {
                             const ocupacao = new Ocupacao(idOcupacao, "", dtFim, tempo, 0);
                             ocupacao.atualizarESP()
                             .then(() => {
-                                res.status(200).json("Ocupacao Atualizada!");
+                                res.status(200).send("Ocupacao Atualizada");
                             })
                             .catch((erro) => {
-                                res.status(500).json(""+erro.message);
+                                res.status(500).send(""+erro.message);
                             });
                         }
                         else {
-                            res.status(400).json("Erro: Data Fim inválida!");
+                            res.status(400).send("Erro: Data Fim inválida!");
                         }
                     }
                 })
