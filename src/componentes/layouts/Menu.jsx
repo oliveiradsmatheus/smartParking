@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export default function Menu(props) {
-    const adminLogado = useSelector((state) => state)
+    //const adminLogado = useSelector((state) => state)
 
     return (
         <Navbar expand="lg" className="bg-body-tertiary mt-2 mb-2 rounded">

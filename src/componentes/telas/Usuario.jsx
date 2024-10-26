@@ -10,14 +10,36 @@ export default function Usuario(props) {
     const [listaUsuarios, setListaUsuarios] = useState(usuarios);
     const [exibirLogin, setExibirLogin] = useState(true);
 
-    const adminLogado = useSelector((state) => state); // Estado do usuário
-
+    //const adminLogado = useSelector((state) => state); // Estado do usuário
+    const user = null
+    function verifyAdmin() {
+        fetch('http://localhost:4000/usuario/validar-token', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.valid) {
+                    user = data
+                    console.log(data)
+                    console.log('Token válido');
+                } else {
+                    console.log('Token inválido');
+                    localStorage.removeItem('token');
+                    window.location.href = '/login';
+                }
+            })
+            .catch(error => console.error('Erro na validação do token:', error));
+    }
     return (
         <Pagina>
             {
-                adminLogado ?
+                user ?
                     <DadosUsuario
-                        adminSelecionado={adminLogado}
+                        adminSelecionado={user}
                         setExibirLogin={setExibirLogin}
                     />
                 :

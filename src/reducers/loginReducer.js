@@ -1,4 +1,4 @@
-const inicialState = "";
+/*const inicialState = "";
 
 // Reducer para lidar com as ações de logar e deslogar
 const loginReducer = (state = inicialState, action) => {
@@ -12,4 +12,4 @@ const loginReducer = (state = inicialState, action) => {
   }
 };
 
-export default loginReducer;
+export default loginReducer;*/

@@ -1,48 +1,67 @@
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+//import { useDispatch } from "react-redux";
 
 export default function Login(props) {
     const [formValidado, setFormValidado] = useState(false);
     const [usuario, setUsuario] = useState("");
     const [senha, setSenha] = useState("");
 
-    const dispatch = useDispatch();
+    /*const dispatch = useDispatch();
     const Logar = (nome) => {
-        dispatch({ type: "LOGAR", payload: nome});
-    };
+        dispatch({ type: "LOGAR", payload: nome });
+    };*/
 
-    function validarLogin() {
+    /*function validarLogin() {
         props.listaUsuarios.some((item) => { // A função some verifica se pelo menos um elemento do array satisfaz a condição.
-            if (item.login === usuario && item.senha === senha){
+            if (item.login === usuario && item.senha === senha) {
                 Logar(item.nome);
                 return true; // Retorna true se o login e senha corresponderem
             }
             return false; // Caso contrário, retorna false
-        });    
-    }
+        });
+    }*/
 
     function manipularSubmissao(evento) {
         const form = evento.currentTarget;
-        const res = fetch('http://localhost:4000/usuario/user', {
-            'method':"POST",
-            'body':{form},
-            'headers':{
-                'Content-Type':"application/json"
+
+        fetch('http://localhost:4000/usuario/user', {
+            'method': "POST",
+            body: JSON.stringify({
+                usuario,
+                senha
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then(response => {
+            return response.json(); // Certifique-se de processar como JSON
+        })
+            .then(data => {
+                localStorage.setItem('token', data.token);
+            })
+            .catch(error => console.error('Erro:', error));
+        
+        const token = localStorage.getItem('token')
+        fetch('http://localhost:4000/login/dashboard', {
+            'method': "GET",
+            'headers': {
+                'Authorization': "Bearer "+ token,
+                'Content-Type': "application/json"
             }
         })
-        console.log(res)
-        /*if (form.checkValidity()) {
-            if (validarLogin() === true) {
-                setFormValidado(false);
-            }
-            else {
-                setSenha("");
-                setUsuario("");
-            }
+        .then(res => {
+            return res.json()
+        })
+        .then(data => {
+            console.log(data)
+        })
+        if (token) {
+            //Logar(usuario)
+            setFormValidado(false);
         } else {
             setFormValidado(true);
-        }*/
+        }
         evento.preventDefault();
         evento.stopPropagation();
     }
