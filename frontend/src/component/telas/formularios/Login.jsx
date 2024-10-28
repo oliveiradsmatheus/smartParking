@@ -1,11 +1,13 @@
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function Login(props) {
     const [formValidado, setFormValidado] = useState(false);
     const [usuario, setUsuario] = useState("");
     const [senha, setSenha] = useState("");
+    const navegar = useNavigate();
 
     const dispatch = useDispatch();
     const Logar = (nome) => {
@@ -16,6 +18,7 @@ export default function Login(props) {
         props.listaUsuarios.some((item) => { // A função some verifica se pelo menos um elemento do array satisfaz a condição.
             if (item.login === usuario && item.senha === senha){
                 Logar(item.nome);
+                navegar("/");
                 return true; // Retorna true se o login e senha corresponderem
             }
             return false; // Caso contrário, retorna false

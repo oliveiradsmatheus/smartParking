@@ -10,6 +10,7 @@ export default class DAO_Sensor {
             sql += " WHERE rua_id LIKE ?";
             parametros.push(`%${termo}%`);
         }
+        sql += " ORDER BY sen_ladoPos";
         const [dataBase, campos] = await conexao.execute(sql, parametros); // Execute a consulta
         await conexao.release();
         let listaSensores = [];
@@ -17,8 +18,7 @@ export default class DAO_Sensor {
             const sensor = {
                 id: l.sen_id,
                 estado: l.sen_estado,
-                ladoPos: l.sen_ladoPos,
-                idRua: l.rua_id
+                ladoPos: l.sen_ladoPos
             };
             listaSensores.push(sensor); // Adicione à listaSensores
         }

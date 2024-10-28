@@ -1,5 +1,5 @@
 import Pagina from "../layouts/Pagina.jsx";
-import { Alert, Card, CardText, Container } from "react-bootstrap";
+import { Alert, Card, Container } from "react-bootstrap";
 
 export default function Home(props) {
     return (
@@ -11,7 +11,7 @@ export default function Home(props) {
                     </h2>
                 </Alert>
                 <Card style={{ width: "65rem" }} className="mx-auto">
-                    <CardText className="p-4 text-center">
+                    <div className="p-4 text-center">
                         <h4>
                             Seja bem-vindo ao Smart Parking, o estacionamento inteligente!
                         </h4>
@@ -19,7 +19,7 @@ export default function Home(props) {
                         <p>
                             Com rapidez e inovação, você pode descobrir facilmente quais vagas estão disponíveis e até buscar pela rua de destino. Além disso, oferecemos relatórios detalhados que são gerados automaticamente com base na sua localização. Incrível, não é?
                         </p>
-                    </CardText>
+                    </div>
                 </Card>
             </Container>
         </Pagina>

@@ -1,5 +1,5 @@
-import { createStore, combineReducers } from "redux";
-import loginReducer from "./loginRedux"; // Importa o reducer
+import { legacy_createStore as createStore, combineReducers } from "redux";
+import loginReducer from "./loginRedux"; // Importa o reducer de login
 import ruaReducer from './ruaRedux'; // Importa o reducer das ruas
 
 const reducerCombinado = combineReducers({

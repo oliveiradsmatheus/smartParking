@@ -1,6 +1,6 @@
 {
   "name": "smart_parking",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "private": true,
   "dependencies": {
     "@react-google-maps/api": "^2.20.3",

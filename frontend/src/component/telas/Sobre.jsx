@@ -1,5 +1,5 @@
 import Pagina from "../layouts/Pagina.jsx";
-import { Alert, Card, CardText, Container } from "react-bootstrap";
+import { Alert, Card, Container } from "react-bootstrap";
 
 export default function Home(props) {
     return (
@@ -11,7 +11,7 @@ export default function Home(props) {
                     </h2>
                 </Alert>
                 <Card style={{ width: "65rem" }} className="mx-auto">
-                    <CardText className="p-4 text-center">
+                    <div className="p-4 text-center">
                         <h4>
                             Sobre o Smart Parking
                         </h4>
@@ -31,7 +31,7 @@ export default function Home(props) {
                         <p>Luiz Gustavo Renner Scatalon</p>
                         <p>Matheus Oliveira da Silva</p>
                         <p>Victor Hugo Donaire de Oliveira</p>
-                    </CardText>
+                    </div>
                 </Card>
             </Container>
         </Pagina>

@@ -1,3 +1,4 @@
+// Serve para Pico Max de Ocupacao
 function decimalParaHorasMinutos(decimal) {
     // Parte inteira do número é a hora
     let horas = Math.floor(decimal);
@@ -8,7 +9,7 @@ function decimalParaHorasMinutos(decimal) {
     // Retorna um objeto com 'h' para horas e 'm' para minutos
     return { h: horas, m: minutos };
 }
-let resultado = decimalParaHorasMinutos(11.8889);
+let resultado = decimalParaHorasMinutos(17.7778);
 console.log(resultado); // Saída: { h: 11, m: 53 }
 
 

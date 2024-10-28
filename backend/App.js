@@ -4,8 +4,9 @@ import dotenv from 'dotenv';
 import rotaRuas from './rotas/Rota_Rua.js'
 import rotaSensores from './rotas/Rota_Sensor.js'
 import rotaOcupacoes from './rotas/Rota_Ocupacao.js'
+import rotaRelatorios from './rotas/Rota_Relatorio.js'
 
-const host = "192.168.177.229"; //192.168.177.229
+const host = "localhost"; //192.168.177.229
 const porta = 5000;
 const app = express();
 dotenv.config();
@@ -21,6 +22,7 @@ app.use(cors({
 app.use('/api/ruas', rotaRuas);
 app.use('/api/sensores', rotaSensores);
 app.use('/api/ocupacoes', rotaOcupacoes);
+app.use('/api/relatorios', rotaRelatorios);
 
 //########## SERVIDOR ##########//
 app.get('/api', (req, res) =>{

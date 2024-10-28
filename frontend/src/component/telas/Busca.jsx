@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Pagina from "../layouts/Pagina.jsx";
 import Rua from "../telas/elementos/Rua.jsx";
-import { Card, CardText, Container, Form, InputGroup } from "react-bootstrap";
+import { Card, CardBody, Container, Form, InputGroup } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
 export default function Busca() {
-    const [listaRuas] = useState(useSelector((state) => state.ruas.ruas));
+    const listaRuas = useSelector((state) => state.ruas.ruas); // Removido useState aqui
     const [pesquisa, setPesquisa] = useState("");
     const [busca, setBusca] = useState([]);
 
@@ -15,16 +15,14 @@ export default function Busca() {
             const buscaFiltrada = listaRuas?.filter((rua) => {
                 if (!rua) return false; // Garante que sempre retorna algo se o 'rua' estiver indefinido
                 let nome = rua.nome;
-                let pesq = pesquisa;
                 const ruaLC = nome.toLowerCase(); // Converte para minúsculas
-                const pesquisaLC = pesq.toLowerCase(); // Coloca a pesquisa em minúsculas
+                const pesquisaLC = pesquisa.toLowerCase(); // Coloca a pesquisa em minúsculas
                 return ruaLC.includes(pesquisaLC); // Retorna booleano
             });
-            if (buscaFiltrada !== "")
-                setBusca([...buscaFiltrada]); // Atualiza o estado da busca
+            setBusca(buscaFiltrada); // Atualiza o estado da busca
+        } else {
+            setBusca(listaRuas); // Mantém todas as ruas se a pesquisa estiver vazia
         }
-        else
-            setBusca([...listaRuas]);
     }, [listaRuas, pesquisa]); // Executa sempre que listaRuas ou pesquisa mudarem
 
     function manipularMudanca(evento) {
@@ -46,17 +44,17 @@ export default function Busca() {
                     </InputGroup>
                 </Card>
                 <Card style={{ width: "65rem" }} className="mx-auto">
-                    <CardText className="p-4 text-center">
+                    <CardBody className="p-4 text-center">
                         {
-                            busca.length ? (
+                            busca.length > 0 ? (
                                 busca.map((rua) => (
-                                    <Rua rua={rua} />
+                                    <Rua key={rua.id} rua={rua} />
                                 ))
+                            ) : (
+                                <p>Nenhum resultado encontrado.</p> // Usar um <p> aqui para manter a semântica
                             )
-                            :
-                            ("Nenhum resultado encontrado.")
                         }
-                    </CardText>
+                    </CardBody>
                 </Card>
             </Container>
         </Pagina>

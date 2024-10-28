@@ -52,7 +52,7 @@ export default class Controle_Ocupacao {
                             const fim = new Date(dtFim);
 
                             let tempo = fim - inicio;
-                            tempo = Math.floor(tempo / (1000 * 60)); // Converte para minutos
+                            tempo = Math.floor(tempo / 1000); // Converte para segundos
 
                             const ocupacao = new Ocupacao(idOcupacao, "", dtFim, tempo, 0);
                             ocupacao.atualizarESP()
