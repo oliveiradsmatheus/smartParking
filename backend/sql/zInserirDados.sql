@@ -2,22 +2,28 @@
 -- DELETE FROM sensor;
 -- DELETE FROM rua;
 
+INSERT INTO usuario (usu_nome, usu_email, usu_senha)
+VALUES (
+    'Luiz Gustavo Renner Scatalon',
+    'luizzoff@hotmail.com',
+    '123'
+  );
+  
 -- -- Inserir uma rua
--- INSERT INTO `rua` (`rua_id`, `rua_nome`, `rua_bairro`, `rua_cidade`,`rua_uf`, `rua_qtdVagas`)
--- VALUES
---   ('RUA1', 'Rua Bom Jesus', 'Jardim Brasília', 'Presidente Prudente', 'SP', 3),
---   ('RUA2', 'Rua Brigadeiro Tobias', 'Jardim Brasília', 'Presidente Prudente', 'SP', 3);
+INSERT INTO `rua` (`rua_id`, `rua_nome`, `rua_bairro`, `rua_cidade`,`rua_uf`, `rua_qtdVagas`)
+VALUES
+  ('RUA1', 'Rua Bom Jesus', 'Jardim Brasília', 'Presidente Prudente', 'SP', 3),
+  ('RUA2', 'Rua Brigadeiro Tobias', 'Jardim Brasília', 'Presidente Prudente', 'SP', 3);
 
 -- Inserir três sensores para a rua cadastrada
 INSERT INTO `sensor` (`sen_estado`, `sen_ladoPos`,`rua_id`)
 VALUES
-  ('M', 'L4', 'RUA1'),  -- Sensor 3 disponível
   ('D', 'L1', 'RUA1'),  -- Sensor 1 disponível
-  ('O', 'L3', 'RUA1');  -- Sensor 2 disponível
-
-  -- ('A', 'L2', 'RUA1'),  -- Sensor 2 disponível
---   ('D', 'R1', 'RUA2'),  -- Sensor 1 disponível
---   ('A', 'L1', 'RUA2'),  -- Sensor 2 disponível
+  ('O', 'L3', 'RUA1'),  -- Sensor 2 disponível
+  ('M', 'L4', 'RUA1'),  -- Sensor 3 disponível
+  ('A', 'R1', 'RUA1'),  -- Sensor 2 disponível
+  ('D', 'R2', 'RUA1'),  -- Sensor 1 disponível
+  ('A', 'R4', 'RUA1');  -- Sensor 2 disponível
 --   ('O', 'L2', 'RUA2');  -- Sensor 3 disponível
 
 -- Inserir várias ocupações para o sensor 1
