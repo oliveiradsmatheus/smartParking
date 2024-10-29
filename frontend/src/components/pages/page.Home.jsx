@@ -1,5 +1,6 @@
-import Pagina from "../layouts/Pagina.jsx";
 import { Alert, Card, Container } from "react-bootstrap";
+
+import Pagina from "../layouts/layout.Pagina";
 
 export default function Home(props) {
     return (

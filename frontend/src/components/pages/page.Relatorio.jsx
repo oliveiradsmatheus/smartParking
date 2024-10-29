@@ -1,11 +1,11 @@
-import Pagina from "../layouts/Pagina";
-import React, { useState, useRef, useEffect } from 'react';
 import { Container, Form, ListGroup, Row, Col, Card, Button, CardText } from 'react-bootstrap';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import axios from "axios";
-// import { consultar } from "../../services/servicoRelatorio";
 
-export default function TelaRelatorio(props) {
+import Pagina from "../layouts/layout.Pagina";
+
+export default function Relatorio(props) {
     const dataAtual = new Date().toISOString().split("T")[0];
     const listaRuasRedux = useSelector((state) => state.ruas.ruas); // Obtém as ruas do Redux
     const [opcoesFiltradas, setOpcoesFiltradas] = useState(listaRuasRedux);

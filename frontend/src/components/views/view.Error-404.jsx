@@ -1,8 +1,9 @@
-import Pagina from "../layouts/Pagina.jsx";
-import Imagem404 from "../../assets/imagens/Erro404.jpg"
 import { Container } from "react-bootstrap";
 
-export default function Erro404(props) {
+import Pagina from "../layouts/layout.Pagina";
+import Imagem404 from "../../assets/images/Error404.jpg"
+
+export default function Error404(props) {
     return (
         <Pagina>
             <Container className="mt-5 text-center">

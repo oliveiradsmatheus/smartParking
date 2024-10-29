@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Pagina from "../layouts/Pagina.jsx";
-import Rua from "../telas/elementos/Rua.jsx";
 import { Card, CardBody, Container, Form, InputGroup } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
-export default function Busca() {
+import Pagina from "../layouts/layout.Pagina";
+import Rua from "../views/view.Rua";
+
+export default function BuscaVagas() {
     const listaRuas = useSelector((state) => state.ruas.ruas); // Removido useState aqui
     const [pesquisa, setPesquisa] = useState("");
     const [busca, setBusca] = useState([]);

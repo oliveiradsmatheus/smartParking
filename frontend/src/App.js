@@ -1,23 +1,25 @@
-import TelaRelatorio from "./component/telas/TelaRelatorio";
-import DetalharRua from "./component/telas/DetalharRua";
-import Busca from "./component/telas/Busca";
-import Sobre from "./component/telas/Sobre";
-import Usuario from "./component/telas/Usuario";
-import Home from "./component/telas/Home";
-import Erro404 from "./component/telas/Erro404";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import DetalhaRua from "./components/pages/page.Detalha-Rua";
+import BuscaVagas from "./components/pages/page.Busca-Vagas";
+import Relatorio from "./components/pages/page.Relatorio";
+import Home from "./components/pages/page.Home";
+
+import Error404 from "./components/views/view.Error-404";
+import Login from "./components/views/view.Login";
+import Sobre from "./components/views/view.Sobre";
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/rua" element={<DetalharRua />} />
-                <Route path="/busca" element={<Busca />} />
+                <Route path="/detalha_rua" element={<DetalhaRua />} />
+                <Route path="/busca_vagas" element={<BuscaVagas />} />
                 <Route path="/sobre" element={<Sobre />} />
-                <Route path="/usuario" element={<Usuario />} />
-                <Route path="/relatorio" element={<TelaRelatorio />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/relatorio" element={<Relatorio />} />
                 <Route path="/" element={<Home />} />
-                <Route path="*" element={<Erro404 />} />
+                <Route path="*" element={<Error404 />} />
             </Routes>
         </BrowserRouter>
     );

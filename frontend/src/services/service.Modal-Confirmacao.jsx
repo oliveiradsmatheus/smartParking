@@ -19,7 +19,7 @@ const ModalConfirmacao = ({ exibir, lidarFechar, lidarConfirmar }) => {
             </Modal.Header>
             <Modal.Body>
                 <Form>
-                    <Form.Label>Atualizar o estado da vaga:</Form.Label>
+                    <Form.Label>Atualizar o Estado da Vaga:</Form.Label>
                     <Form.Control 
                         as="select" 
                         value={estado} 

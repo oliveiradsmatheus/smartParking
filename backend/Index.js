@@ -5,6 +5,7 @@ import rotaRuas from './rotas/Rota_Rua.js'
 import rotaSensores from './rotas/Rota_Sensor.js'
 import rotaOcupacoes from './rotas/Rota_Ocupacao.js'
 import rotaRelatorios from './rotas/Rota_Relatorio.js'
+import rotaUsuarios from './rotas/Rota_Usuario.js'
 
 const host = "localhost"; //192.168.177.229
 const porta = 5000;
@@ -23,6 +24,7 @@ app.use('/api/ruas', rotaRuas);
 app.use('/api/sensores', rotaSensores);
 app.use('/api/ocupacoes', rotaOcupacoes);
 app.use('/api/relatorios', rotaRelatorios);
+app.use('/api/usuarios', rotaUsuarios);
 
 //########## SERVIDOR ##########//
 app.get('/api', (req, res) =>{

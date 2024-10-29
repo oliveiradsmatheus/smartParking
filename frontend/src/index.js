@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider, useDispatch } from 'react-redux';
-import store from './redux/store.js';
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom/client';
 import axios from "axios";
+
+import App from './App';
+import store from './redux/redux.store';
 
 // Componente para buscar as ruas
 const FetchRuas = () => {

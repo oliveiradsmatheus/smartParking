@@ -1,20 +1,22 @@
-import Pagina from "../layouts/Pagina";
 import { Alert, Card, CardBody, Container, Image } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import ModalConfirmacao from "../../services/modalConfirmacao"; // Ajuste o caminho conforme necessário
 
-import ruaImg from "../../assets/imagens/rua4.png";
-import vagaD from "../../assets/imagens/vagaD.png";
-import vagaA from "../../assets/imagens/vagaA.png";
-import vagaO from "../../assets/imagens/vagaO.png";
-import vagaM from "../../assets/imagens/vagaM.png";
-import bolaD from "../../assets/imagens/bolaD1.png";
-import bolaO from "../../assets/imagens/bolaO.png";
-import bolaM from "../../assets/imagens/bolaM.png";
-import bolaA from "../../assets/imagens/bolaA.png";
-export default function DetalharRua() {
+import Pagina from "../layouts/layout.Pagina";
+import ModalConfirmacao from "../../services/service.Modal-Confirmacao"; // Ajuste o caminho conforme necessário
+
+import ruaImg from "../../assets/images/rua4.png";
+import vagaD from "../../assets/images/vagaD.png";
+import vagaA from "../../assets/images/vagaA.png";
+import vagaO from "../../assets/images/vagaO.png";
+import vagaM from "../../assets/images/vagaM.png";
+import bolaD from "../../assets/images/bolaD1.png";
+import bolaO from "../../assets/images/bolaO.png";
+import bolaM from "../../assets/images/bolaM.png";
+import bolaA from "../../assets/images/bolaA.png";
+
+export default function DetalhaRua() {
     const params = new URLSearchParams(window.location.search);
     const idFromUrl = params.get('id');
     const listaRuas = useSelector((state) => state.ruas.ruas);
