@@ -40,12 +40,12 @@ const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
         origin: "http://localhost:3000",
-        methods: ["GET", "PUT"],
+        methods: ["GET", "PUT", "POST"],
     },
 });
 
-io.on('connection', (socket) => {
-    console.log('Novo cliente conectado: ', socket.id);
+io.on('connection', () => {
+    console.log('Novo cliente conectado!');
 
 })
 server.listen(porta, host, () => {

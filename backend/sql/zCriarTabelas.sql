@@ -35,12 +35,12 @@ CREATE TABLE IF NOT EXISTS `ocupacao` (
       REFERENCES `sensor` (`sen_id`)
         ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-CREATE TABLE IF NOT EXISTS usuario(
-  usu_id INT NOT NULL AUTO_INCREMENT,
-  usu_nick VARCHAR(45) NOT NULL,
-  usu_nome VARCHAR(100) NOT NULL,
-  usu_email VARCHAR(100) NOT NULL,
-  usu_senha VARCHAR(100) NOT NULL,
+CREATE TABLE IF NOT EXISTS `usuario`(
+  `usu_id` INT NOT NULL AUTO_INCREMENT,
+  `usu_nick` VARCHAR(45) NOT NULL,
+  `usu_nome` VARCHAR(100) NOT NULL,
+  `usu_email` VARCHAR(100) NOT NULL,
+  `usu_senha` VARCHAR(100) NOT NULL,
   CONSTRAINT pk_usuario PRIMARY KEY (usu_id),
   CONSTRAINT uk_usuario UNIQUE (usu_email, usu_nome)
 );
