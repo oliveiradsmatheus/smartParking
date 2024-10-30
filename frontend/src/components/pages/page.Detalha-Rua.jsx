@@ -45,7 +45,7 @@ export default function DetalhaRua() {
 
     useEffect(() => {
         fetchSensores();
-    }, [idFromUrl]);
+    });
 
     useEffect(() => {
         if (listaRuas)
@@ -58,7 +58,7 @@ export default function DetalhaRua() {
         return () => {
             socket.off("Estado Atualizado"); // Remove o listener ao desmontar
         };
-    }, []);
+    });
 
     const fetchSensorAtt = async (idSensor, novoEstado) => {
         try {
