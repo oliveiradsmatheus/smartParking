@@ -5,8 +5,8 @@ const sensorControle = new Controle_Sensor();
 const rota = Router();
 
 rota
-.get("/", sensorControle.consultar)
-.get("/:rua_id", sensorControle.consultar)
-.put("/:sen_id/:sen_estado", sensorControle.atualizarESP)
+  .get("/", (req, res) => sensorControle.consultar(req, res))
+  .get("/:rua_id", (req, res) => sensorControle.consultar(req, res))
+  .put("/:sen_id/:sen_estado", (req, res) => sensorControle.atualizarESP(req, res));
 
 export default rota;

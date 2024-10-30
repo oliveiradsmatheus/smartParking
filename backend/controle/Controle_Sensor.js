@@ -34,6 +34,7 @@ export default class Controle_Sensor{
                 const sensor = new Sensor(id, estado, "", "");
                 sensor.atualizarESP()
                 .then(() => {
+                    req.io.emit("Estado Atualizado");
                     res.status(200).send("Estado Atualizado");
                 })
                 .catch((erro) => {

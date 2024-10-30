@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import http from 'http';
+import { Server } from 'socket.io';
 import rotaRuas from './rotas/Rota_Rua.js'
 import rotaSensores from './rotas/Rota_Sensor.js'
 import rotaOcupacoes from './rotas/Rota_Ocupacao.js'
@@ -15,21 +17,37 @@ dotenv.config();
 //########## MIDDLEWARE e CORS ##########//
 app.use(express.json());
 app.use(cors({
-    origin:"*",
-    "Access-Control-Allow-Origin":"*"
+    origin: "*",
+    "Access-Control-Allow-Origin": "*"
 }));
-    
+
 //########## ROTAS ##########//
+app.use((req, res, next) => {
+    req.io = io;
+    next();
+})
 app.use('/api/ruas', rotaRuas);
 app.use('/api/sensores', rotaSensores);
 app.use('/api/ocupacoes', rotaOcupacoes);
 app.use('/api/relatorios', rotaRelatorios);
 app.use('/api/usuarios', rotaUsuarios);
-
-//########## SERVIDOR ##########//
-app.get('/api', (req, res) =>{
+app.get('/api', (req, res) => {
     res.send("Servidor Escutando !!!");
 })
-app.listen(porta, host, () => {
+
+//########## SERVIDOR ##########//
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "PUT"],
+    },
+});
+
+io.on('connection', (socket) => {
+    console.log('Novo cliente conectado: ', socket.id);
+
+})
+server.listen(porta, host, () => {
     console.log(`Servidor escutando em http://${host}:${porta}`)
 });

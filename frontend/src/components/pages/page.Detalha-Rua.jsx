@@ -2,9 +2,10 @@ import { Alert, Card, CardBody, Container, Image } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import io from "socket.io-client";  // Importa o socket.io-client
 
 import Pagina from "../layouts/layout.Pagina";
-import ModalConfirmacao from "../../services/service.Modal-Confirmacao"; // Ajuste o caminho conforme necessário
+import ModalConfirmacao from "../../services/service.Modal-Confirmacao";
 
 import ruaImg from "../../assets/images/rua4.png";
 import vagaD from "../../assets/images/vagaD.png";
@@ -16,6 +17,9 @@ import bolaO from "../../assets/images/bolaO.png";
 import bolaM from "../../assets/images/bolaM.png";
 import bolaA from "../../assets/images/bolaA.png";
 
+// Configura a conexão do socket
+const socket = io("http://localhost:5000"); 
+
 export default function DetalhaRua() {
     const params = new URLSearchParams(window.location.search);
     const idFromUrl = params.get('id');
@@ -26,18 +30,20 @@ export default function DetalhaRua() {
     const [exibirModal, setExibirModal] = useState(false);
     const [idSensor, setIdSensor] = useState(null);
 
+    // Função para buscar sensores
+    const fetchSensores = async () => {
+        try {
+            const resposta = await axios.get("http://localhost:5000/api/sensores/" + idFromUrl);
+            setSensores(resposta.data); 
+        } catch (erro) {
+            if (erro.response != null)
+                alert("Erro ao buscar sensores: " + erro.response.data.mensagem);
+            else
+                alert("Erro ao buscar sensores: API Offline");
+        }
+    };
+
     useEffect(() => {
-        const fetchSensores = async () => {
-            try {
-                const resposta = await axios.get("http://localhost:5000/api/sensores/" + idFromUrl);
-                setSensores(resposta.data); // Armazena os sensores no estado
-            } catch (erro) {
-                if (erro.response != null)
-                    alert("Erro ao buscar sensores: " + erro.response.data.mensagem);
-                else
-                    alert("Erro ao buscar sensores: API Offline");
-            }
-        };
         fetchSensores();
     }, [idFromUrl]);
 
@@ -46,6 +52,13 @@ export default function DetalhaRua() {
             setRua(listaRuas.find((rua) => rua.id === idFromUrl) || {});
     }, [listaRuas, idFromUrl]);
 
+    // Configura o socket para escutar atualizações de sensores
+    useEffect(() => {
+        socket.on("Estado Atualizado", fetchSensores);
+        return () => {
+            socket.off("Estado Atualizado"); // Remove o listener ao desmontar
+        };
+    }, []);
 
     const fetchSensorAtt = async (idSensor, novoEstado) => {
         try {
@@ -65,13 +78,15 @@ export default function DetalhaRua() {
     };
 
     const lidarConfirmar = async (novoEstado) => {
-        await fetchSensorAtt(idSensor, novoEstado); // Passa o novo estado
-        lidarFecharModal(); // Fecha o modal após a confirmação
+        await fetchSensorAtt(idSensor, novoEstado);
+        lidarFecharModal();
     };
+
     const lidarExibirModal = (id) => {
         setIdSensor(id);
         setExibirModal(true);
     };
+
     const lidarFecharModal = () => setExibirModal(false);
 
     return (
@@ -122,7 +137,7 @@ export default function DetalhaRua() {
                                         adminLogado ? (
                                             <Image
                                                 type="Button"
-                                                onClick={() => lidarExibirModal(s.id)} // Abre o modal ao clicar
+                                                onClick={() => lidarExibirModal(s.id)}
                                                 key={s.id}
                                                 src={
                                                     s.estado === 'D' ? vagaD :
@@ -154,7 +169,6 @@ export default function DetalhaRua() {
                 </Card>
             </Container>
 
-            {/* Modal de Confirmação */}
             <ModalConfirmacao
                 exibir={exibirModal}
                 lidarFechar={lidarFecharModal}
