@@ -1,7 +1,7 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-const String IP = "192.168.131.229";
+const String IP = "192.168.252.229";
 unsigned long timeout = 3000;
 const char *REDE = "N5";
 const char *SENHA = "desconhecido123";
@@ -51,7 +51,7 @@ void loop()
 					Serial.print(id);
 					Serial.print(" / ");
 					Serial.println(estado);
-					http.begin("http://" + IP + ":5000/api/sensores/" + id + "/" + estado);
+					http.begin("http://" + IP + ":5000/sensores/" + id + "/" + estado);
 					httpResposta = http.PUT("");
 					ProcessarResposta(httpResposta, http);
 				}
@@ -59,7 +59,7 @@ void loop()
 				{ // PATCH para tabela ocupacao PATCH:ID_Ocupacao
 					id = resp.substring(resp.indexOf(':') + 1);
 					Serial.println(id);
-					http.begin("http://" + IP + ":5000/api/ocupacoes/" + id);
+					http.begin("http://" + IP + ":5000/ocupacoes/" + id);
 					httpResposta = http.PUT("");
 					ProcessarResposta(httpResposta, http);
 				}
@@ -67,7 +67,7 @@ void loop()
 				{ // POST para tabela ocupacao POST:ID_SENSOR
 					id = resp.substring(resp.indexOf(':') + 1);
 					Serial.println(id);
-					http.begin("http://" + IP + ":5000/api/ocupacoes/" + id);
+					http.begin("http://" + IP + ":5000/ocupacoes/" + id);
 					httpResposta = http.POST("");
 					ProcessarResposta(httpResposta, http);
 				}

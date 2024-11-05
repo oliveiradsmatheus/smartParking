@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Modal, Button } from 'react-bootstrap';
 
-const ModalConfirmacao = ({ exibir, lidarFechar, lidarConfirmar }) => {
-    const [estado, setEstado] = useState('M'); // Estado inicial do slider
+const ModalConfirmacao = ({ exibir, lidarFechar, lidarConfirmar, estadoSensor }) => {
+    const [estado, setEstado] = useState(estadoSensor === 'M' ? 'D' : 'M'); // Estado inicial do slider
 
-    const lidarMudancaSlider = (evento) => {
-        setEstado(evento.target.value);
-    };
+    useEffect(() => {
+        setEstado(estadoSensor === 'M' ? 'D' : 'M');
+    }, [estadoSensor]);
 
     const onConfirmar = () => {
         lidarConfirmar(estado); // Passa o estado selecionado para o método de confirmação
@@ -18,19 +18,7 @@ const ModalConfirmacao = ({ exibir, lidarFechar, lidarConfirmar }) => {
                 <Modal.Title>Confirmação</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form>
-                    <Form.Label>Atualizar o Estado da Vaga:</Form.Label>
-                    <Form.Control 
-                        as="select" 
-                        value={estado} 
-                        onChange={lidarMudancaSlider}
-                    >
-                        <option value="M">Manutenção</option>
-                        <option value="D">Disponível</option>
-                        <option value="A">Analisando</option>
-                        <option value="O">Ocupada</option>
-                    </Form.Control>
-                </Form>
+                <p>Atualizar Estado da Vaga Para <strong>{estadoSensor==='M' ? 'Disponível' : 'Manutenção'}</strong>?</p>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={lidarFechar}>

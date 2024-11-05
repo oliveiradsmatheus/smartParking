@@ -14,7 +14,7 @@ export default class Controle_Usuario {
                             const token = jsonwebtoken.sign(
                                 { id: usuario.usu_id, nick: usuario.usu_nick },
                                 process.env.JWT_SECRET,
-                                { expiresIn: '10m' }
+                                { expiresIn: '1h' }
                             );
 
                             // Responder com o token e dados do usuário

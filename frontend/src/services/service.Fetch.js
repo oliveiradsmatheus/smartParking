@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import axios from "axios";
 
-const url = "localhost"; //192.168.131.229 do meu
+const url = process.env.REACT_APP_IP;
 
 //===========================// USUARIOS //============================//
 export const getRelatorio = async (tipoRel, idRua, dtInicio, dtFim) => {

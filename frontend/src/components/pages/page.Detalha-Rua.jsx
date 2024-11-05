@@ -2,7 +2,7 @@ import { Alert, Card, CardBody, Container, Image } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import io from "socket.io-client";  // Importa o socket.io-client
+import io from "socket.io-client";
 
 import Pagina from "../layouts/layout.Pagina";
 import ModalConfirmacao from "../../services/service.Modal-Confirmacao";
@@ -18,8 +18,7 @@ import bolaO from "../../assets/images/bolaO.png";
 import bolaM from "../../assets/images/bolaM.png";
 import bolaA from "../../assets/images/bolaA.png";
 
-// Configura a conexão do socket
-const socket = io("http://localhost:5000");
+const socket = io(`http://${process.env.REACT_APP_IP}:5000`);
 
 export default function DetalhaRua() {
     const params = new URLSearchParams(window.location.search);
@@ -30,30 +29,40 @@ export default function DetalhaRua() {
     const [sensores, setSensores] = useState([]);
     const [exibirModal, setExibirModal] = useState(false);
     const [idSensor, setIdSensor] = useState(null);
+    const [estadoSensor, setEstadoSensor] = useState(null);
 
     useEffect(() => {
-        const consultarSensores = () => {  // Define a função consultarSensores
+        const atualizarSensores = () => {
             getSensores(idFromUrl)
                 .then((resposta) => {
                     if (resposta?.status)
                         setSensores(resposta.data);
                 });
         };
-        socket.on("Estado Atualizado", consultarSensores);  // Configura o socket para escutar atualizações de sensores
 
-        consultarSensores(); // Chama consultarSensores quando o componente é montado
+        // Configura o socket para escutar atualizações de sensores
+        socket.on("Estado Atualizado", atualizarSensores);
 
+        // Remove o listener ao desmontar o componente
+        return () => {
+            socket.off("Estado Atualizado", atualizarSensores);
+        };
+    }, [idFromUrl]);
+
+    useEffect(() => {
+        getSensores(idFromUrl)
+            .then((resposta) => {
+                if (resposta?.status)
+                    setSensores(resposta.data);
+            });
         if (listaRuas)
             setRua(listaRuas.find((rua) => rua.id === idFromUrl) || {});
-
-        return () => { // Limpa o listener quando o componente é desmontado
-            socket.off("Estado Atualizado");
-        };
     }, [listaRuas, idFromUrl]);
 
     const lidarFecharModal = () => setExibirModal(false);
-    const lidarExibirModal = (id) => {
+    const lidarExibirModal = (id, estado) => {
         setIdSensor(id);
+        setEstadoSensor(estado);
         setExibirModal(true);
     };
     const lidarConfirmar = async (novoEstado) => {
@@ -127,7 +136,7 @@ export default function DetalhaRua() {
                                         adminLogado ? (
                                             <Image
                                                 type="Button"
-                                                onClick={() => lidarExibirModal(s.id)}
+                                                onClick={() => lidarExibirModal(s.id, s.estado)}
                                                 key={s.id}
                                                 src={
                                                     s.estado === 'D' ? vagaD :
@@ -163,6 +172,7 @@ export default function DetalhaRua() {
                 exibir={exibirModal}
                 lidarFechar={lidarFecharModal}
                 lidarConfirmar={lidarConfirmar}
+                estadoSensor={estadoSensor}
             />
         </Pagina>
     );

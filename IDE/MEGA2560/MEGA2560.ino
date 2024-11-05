@@ -4,8 +4,10 @@
 // Define os pinos para o trigger e echo
 #define TRIG_PIN1 2
 #define ECHO_PIN1 3
+
 #define TRIG_PIN2 4
 #define ECHO_PIN2 5
+
 #define TRIG_PIN3 6
 #define ECHO_PIN3 7
 
@@ -23,7 +25,7 @@
 
 int DistanciaAtivacao = 30; // cm
 int TempoAnalise = 6;		// segundos
-unsigned long timeout = 3000;
+unsigned long timeout = 1000;
 
 // Variáveis globais
 int TempoVaga1 = 0, TempoVaga2 = 0, TempoVaga3 = 0;
@@ -272,16 +274,16 @@ void SetLed(int LED_R, int LED_Y, int LED_G, int &TempoVaga, int Distancia, int 
 void loop()
 {
 	// Envia um pulso de 10us no pino de trigger
-	// long Distancia1 = MedirDistancia(TRIG_PIN1, ECHO_PIN1);
-	// long Distancia2 = MedirDistancia(TRIG_PIN2, ECHO_PIN2);
+	long Distancia1 = MedirDistancia(TRIG_PIN1, ECHO_PIN1);
+	long Distancia2 = MedirDistancia(TRIG_PIN2, ECHO_PIN2);
 	long Distancia3 = MedirDistancia(TRIG_PIN3, ECHO_PIN3);
 
-	// ExibirDistancia(Distancia1, 1);
-	// ExibirDistancia(Distancia2, 2);
+	ExibirDistancia(Distancia1, 1);
+	ExibirDistancia(Distancia2, 2);
 	ExibirDistancia(Distancia3, 3);
 
-	// SetLed(LED1_R, LED1_Y, LED1_G, TempoVaga1, Distancia1, idSensor, 0);
-	// SetLed(LED2_R, LED2_Y, LED2_G, TempoVaga2, Distancia2, idSensor, 1);
+	SetLed(LED1_R, LED1_Y, LED1_G, TempoVaga1, Distancia1, idSensor, 0);
+	SetLed(LED2_R, LED2_Y, LED2_G, TempoVaga2, Distancia2, idSensor, 1);
 	SetLed(LED3_R, LED3_Y, LED3_G, TempoVaga3, Distancia3, idSensor, 2);
 
 	delay(500); // Aguarda 1 segundo antes de ler novamente

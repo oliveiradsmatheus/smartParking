@@ -1,4 +1,4 @@
-DROP SCHEMA smart_parking;
+-- DROP SCHEMA smart_parking;
 CREATE SCHEMA IF NOT EXISTS smart_parking DEFAULT CHARACTER SET utf8;
 USE smart_parking;
 
