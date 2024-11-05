@@ -13,7 +13,7 @@ root.render(
     <React.StrictMode>
         <Provider store={store}>
             <App />
-            <Toaster/>
+            <Toaster />
         </Provider>
     </React.StrictMode>
 );

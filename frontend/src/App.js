@@ -18,10 +18,10 @@ function App() {
 
     useEffect(() => {
         getRuas()
-            .then((resposta) => {
-                if(resposta?.status)
-                    dispatch({ type: "SET_RUAS", payload: resposta.data });
-            });
+        .then((resposta) => {
+            if (resposta?.status)
+                dispatch({ type: "SET_RUAS", payload: resposta.data });
+        });
     }, [dispatch]);
 
     return (

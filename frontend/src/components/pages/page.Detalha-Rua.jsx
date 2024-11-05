@@ -58,7 +58,7 @@ export default function DetalhaRua() {
     };
     const lidarConfirmar = async (novoEstado) => {
         toast.promise(
-            await putSensor(idSensor, novoEstado)
+            putSensor(idSensor, novoEstado)
                 .then((resposta) => {
                     if (resposta?.status) {
                         setSensores((prevSensores) =>

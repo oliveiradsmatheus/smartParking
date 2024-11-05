@@ -9,7 +9,7 @@ INSERT INTO usuario (usu_nick, usu_nome, usu_email, usu_senha)
     'matheus@hotmail.com',
     '123'
   ),
-  VALUES (
+  (
     'luiz',
     'Luiz Gustavo Renner Scatalon',
     'luiz@hotmail.com',
