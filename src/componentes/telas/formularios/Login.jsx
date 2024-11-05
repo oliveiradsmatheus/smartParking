@@ -1,5 +1,6 @@
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useState } from "react";
+import { verifyAdmin } from "../Usuario";
 //import { useDispatch } from "react-redux";
 
 export default function Login(props) {
@@ -41,9 +42,9 @@ export default function Login(props) {
                 localStorage.setItem('token', data.token);
             })
             .catch(error => console.error('Erro:', error));
-        
+
         const token = localStorage.getItem('token')
-        fetch('http://localhost:4000/login/dashboard', {
+        /*fetch('http://localhost:4000/login/dashboard', {
             'method': "GET",
             'headers': {
                 'Authorization': "Bearer "+ token,
@@ -55,10 +56,12 @@ export default function Login(props) {
         })
         .then(data => {
             console.log(data)
-        })
+        })*/
         if (token) {
             //Logar(usuario)
+            props.setExibirUser(true);
             setFormValidado(false);
+            //verifyAdmin();
         } else {
             setFormValidado(true);
         }
