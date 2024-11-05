@@ -56,14 +56,18 @@ export const getRuas = async () => {
 
 
 //==============// USUARIOS //==============//
-export const getUsuarios = async (nick) => {
+export const getUsuarios = async (nick, senha) => {
     try {
-        return await axios.get(`http://${url}:5000/usuarios/${nick}`);
+        return await axios.post(`http://${url}:5000/usuarios`,
+            { nick: nick, senha: senha }
+        );
     }
     catch (erro) {
         if (erro.response) {
             const status = erro.response?.status;
-            if (status === 404)
+            if (status === 401)
+                toast.error(erro.response.data.mensagem);                
+            else if (status === 404)
                 toast.error("Erro ao buscar usuário: Rotas Incorretas!");
             else
                 toast.error(`Erro ao buscar usuário: ${status} - ${erro.response?.data || "Erro desconhecido"}`);

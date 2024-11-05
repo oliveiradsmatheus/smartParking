@@ -5,7 +5,6 @@ import { useState } from "react";
 
 import { getUsuarios } from "../../services/service.Fetch";
 import Pagina from "../layouts/layout.Pagina";
-import toast from "react-hot-toast";
 
 export default function Usuario(props) {
     const [nick, setNick] = useState("");
@@ -22,15 +21,12 @@ export default function Usuario(props) {
         const form = evento.currentTarget;
         if (form.checkValidity()) {
             setFormValidado(false);
-            getUsuarios(nick)
+            getUsuarios(nick, senha)
                 .then((resposta) => {
                     if (resposta?.status) {
-                        if (resposta.data.usu_nick === nick && resposta.data.usu_senha === senha) {
-                            dispatch({ type: "LOGAR", payload: resposta.data.usu_nick.toUpperCase() });
-                            navegar("/");
-                        }
-                        else
-                            toast.error("Usuario ou senha incorretos!");
+                        localStorage.setItem("token", resposta.data.token); // Armazenar o token
+                        dispatch({ type: "LOGAR", payload: nick.toUpperCase() });
+                        navegar("/");
                     }
                 });
         }

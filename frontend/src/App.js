@@ -15,14 +15,28 @@ import Sobre from "./components/views/view.Sobre";
 
 function App() {
     const dispatch = useDispatch();
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
         getRuas()
-        .then((resposta) => {
-            if (resposta?.status)
-                dispatch({ type: "SET_RUAS", payload: resposta.data });
-        });
-    }, [dispatch]);
+            .then((resposta) => {
+                if (resposta?.status)
+                    dispatch({ type: "SET_RUAS", payload: resposta.data });
+            });
+        if (token) {
+            const tokenData = JSON.parse(atob(token.split('.')[1])); // decodifica a parte do payload do JWT
+            const tokenExpiracao = tokenData.exp * 1000; // Converte a expiração para milissegundos
+            const tempoAtual = Date.now();
+
+            if (tokenExpiracao < tempoAtual) { // Se o token já tiver expirado
+                localStorage.removeItem("token");
+                dispatch({ type: "DESLOGAR" });
+            }
+            else{
+                dispatch({ type: "LOGAR", payload: tokenData.nick.toUpperCase() });
+            }
+        }
+    }, [dispatch, token]);
 
     return (
         <BrowserRouter>
