@@ -2,7 +2,7 @@
   "name": "servidor",
   "version": "3.0.0",
   "description": "API_SmartParking",
-  "main": "Index.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "start": "nodemon index.js"

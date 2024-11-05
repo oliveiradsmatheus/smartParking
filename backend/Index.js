@@ -9,10 +9,10 @@ import rotaOcupacoes from './rotas/Rota_Ocupacao.js'
 import rotaRelatorios from './rotas/Rota_Relatorio.js'
 import rotaUsuarios from './rotas/Rota_Usuario.js'
 
-const host = "localhost"; //192.168.177.229
-const porta = 5000;
 const app = express();
 dotenv.config();
+const host = process.env.IP;
+const porta = 5000;
 
 //########## MIDDLEWARE e CORS ##########//
 app.use(express.json());
@@ -26,12 +26,12 @@ app.use((req, res, next) => {
     req.io = io;
     next();
 })
-app.use('/api/ruas', rotaRuas);
-app.use('/api/sensores', rotaSensores);
-app.use('/api/ocupacoes', rotaOcupacoes);
-app.use('/api/relatorios', rotaRelatorios);
-app.use('/api/usuarios', rotaUsuarios);
-app.get('/api', (req, res) => {
+app.use('/ruas', rotaRuas);
+app.use('/sensores', rotaSensores);
+app.use('/ocupacoes', rotaOcupacoes);
+app.use('/relatorios', rotaRelatorios);
+app.use('/usuarios', rotaUsuarios);
+app.get('/', (req, res) => {
     res.send("Servidor Escutando !!!");
 })
 
@@ -44,10 +44,9 @@ const io = new Server(server, {
     },
 });
 
-io.on('connection', () => {
-    console.log('Novo cliente conectado!');
-
-})
+// io.on('connection', () => {
+//     console.log('Novo cliente conectado!');
+// })
 server.listen(porta, host, () => {
     console.log(`Servidor escutando em http://${host}:${porta}`)
 });

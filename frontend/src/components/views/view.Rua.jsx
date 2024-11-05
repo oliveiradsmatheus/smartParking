@@ -13,7 +13,7 @@ export default function Rua(props) {
                     <div>Quantidade de Vagas: {props.rua.qtdVagas}</div>
                 </CardBody>
                 <Button onClick={() => {
-                    navegar("/detalha_rua?id=" + props.rua.id);
+                    navegar("/detalha-rua?id=" + props.rua.id);
                 }}>
                     Selecionar Rua
                 </Button>

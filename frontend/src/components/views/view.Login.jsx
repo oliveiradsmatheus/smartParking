@@ -2,9 +2,10 @@ import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import axios from "axios";
 
+import { getUsuarios } from "../../services/service.Fetch";
 import Pagina from "../layouts/layout.Pagina";
+import toast from "react-hot-toast";
 
 export default function Usuario(props) {
     const [nick, setNick] = useState("");
@@ -14,45 +15,27 @@ export default function Usuario(props) {
     const navegar = useNavigate();
     const dispatch = useDispatch();
 
-    const Logar = (nick) => {
-        dispatch({ type: "LOGAR", payload: nick });
-    };
-
-    const fetchLogin = async () => {
-      try {
-        const resposta = await axios.get("http://localhost:5000/api/usuarios/" + nick);
-        if(resposta)
-            if (resposta.data.usu_nick === nick && resposta.data.usu_senha === senha) {
-                Logar(resposta.data.usu_nick.toUpperCase());
-                navegar("/");
-                return true; // Retorna true se o login e senha corresponderem
-            }
-        return false; // Caso contrário, retorna false
-      } catch (erro) {
-        if (erro.response != null)
-          alert("Erro ao consultar usuario:  " + erro.response.data.mensagem);
-        else
-          alert("Erro ao consultar usuario: API Offline");
-        return false;
-      }
-    };
-
     function manipularSubmissao(evento) {
-        const form = evento.currentTarget;
-        if (form.checkValidity()) {
-            if (fetchLogin() === true) {
-                setFormValidado(false);
-            }
-            else {
-                setNick("");
-                setSenha("");
-                setFormValidado(false);
-            }
-        } else {
-            setFormValidado(true);
-        }
         evento.preventDefault();
         evento.stopPropagation();
+
+        const form = evento.currentTarget;
+        if (form.checkValidity()) {
+            setFormValidado(false);
+            getUsuarios(nick)
+                .then((resposta) => {
+                    if (resposta?.status) {
+                        if (resposta.data.usu_nick === nick && resposta.data.usu_senha === senha) {
+                            dispatch({ type: "LOGAR", payload: resposta.data.usu_nick.toUpperCase() });
+                            navegar("/");
+                        }
+                        else
+                            toast.error("Usuario ou senha incorretos!");
+                    }
+                });
+        }
+        else
+            setFormValidado(true);
     }
 
     return (
@@ -85,7 +68,7 @@ export default function Usuario(props) {
                         Entrar
                     </Button>
                 </Form>
-            </Container >
+            </Container>
         </Pagina>
     );
 }

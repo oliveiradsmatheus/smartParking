@@ -11,6 +11,7 @@ export default function Perfil(props) {
 
     const Deslogar = () => {
         dispatch({ type: "DESLOGAR" });
+        window.location.reload(true);
     };
 
     return (

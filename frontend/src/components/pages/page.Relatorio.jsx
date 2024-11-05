@@ -1,9 +1,9 @@
 import { Container, Form, ListGroup, Row, Col, Card, Button, CardText } from 'react-bootstrap';
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector } from "react-redux";
-import axios from "axios";
 
 import Pagina from "../layouts/layout.Pagina";
+import { getRelatorio } from '../../services/service.Fetch';
 
 export default function Relatorio(props) {
     const dataAtual = new Date().toISOString().split("T")[0];
@@ -29,12 +29,13 @@ export default function Relatorio(props) {
     const lidarMudancaPesquisa = (e) => {
         const valor = e.target.value;
         setPesquisa(valor);
-        setMostrarOpcoes(valor !== ''); // Mostra opções apenas se o campo não estiver vazio
-        setOpcoesFiltradas( // Filtra as opções
-            listaRuasRedux.filter(rua =>
-                rua.nome.toLowerCase().includes(valor.toLowerCase()) // Filtra pelo nome da rua
+        pesquisa.length > 0 && (
+            setOpcoesFiltradas( // Filtra as opções
+                listaRuasRedux.filter(rua =>
+                    rua.nome.toLowerCase().includes(valor.toLowerCase()) // Filtra pelo nome da rua
+                )
             )
-        );
+        )
     };
     const lidarOpcaoClick = (rua) => {
         setPesquisa(rua.nome); // Define o valor do campo de busca como o nome da rua selecionada
@@ -46,12 +47,18 @@ export default function Relatorio(props) {
         if (listaRef.current && !listaRef.current.contains(event.target)) // Verifica se o clique foi fora do input e da lista
             setMostrarOpcoes(false); // Fecha a lista
     };
+
+    useEffect(()=>{
+        setOpcoesFiltradas(listaRuasRedux);
+    },[listaRuasRedux]);
+
     useEffect(() => {
         document.addEventListener('mousedown', lidarClickFora); // Adiciona o listener
         return () => {
             document.removeEventListener('mousedown', lidarClickFora); // Remove o listener ao desmontar
         };
     }, []);
+
 
     function decimalParaHorasMinutos(decimal) {
         let horas = Math.floor(decimal);
@@ -60,34 +67,25 @@ export default function Relatorio(props) {
     }
 
     function manipularSubmissao(evento) {
+        evento.preventDefault();
+        evento.stopPropagation();
+
         const form = evento.currentTarget;
         if (form.checkValidity()) {
             setBuscado(false); // Marca como não buscado antes da nova tentativa
             setTempTipo(tipoRel);
             setTempInfoRua(infoRua);
-            const fetch = async () => {
-                try {
-                    const resposta = await axios.get(`http://localhost:5000/api/relatorios`, {
-                        params: {
-                            tipo: tipoRel,
-                            rua: idRua,
-                            dtInicio: dtInicio,
-                            dtFim: dtFim
-                        },
-                    });
-                    setResposta(resposta.data); // Acesse a resposta corretamente
-                    setBuscado(true);
-                } catch (erro) {
-                    alert("Erro ao consultar relatorio: " + erro.response.data.mensagem);
-                }
-            };
-            fetch();
+            getRelatorio(tipoRel, idRua, dtInicio, dtFim)
+                .then((resposta) => {
+                    if (resposta?.status) {
+                        setResposta(resposta.data); // Acesse a resposta corretamente
+                        setBuscado(true);
+                    }
+                })
         }
         else {
             setFormValidado(true);
         }
-        evento.preventDefault();
-        evento.stopPropagation();
     }
 
     return (
@@ -194,7 +192,7 @@ export default function Relatorio(props) {
                                 </Form.Group>
                             </Col>
                             <Col xs={2} className="pt-4 mt-2">
-                                <Button onClick={()=>{setInicioConsulta(true)}} type="submit" variant="primary">
+                                <Button onClick={() => { setInicioConsulta(true) }} type="submit" variant="primary">
                                     Confirmar
                                 </Button>
                             </Col>

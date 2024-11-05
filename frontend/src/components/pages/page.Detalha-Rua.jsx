@@ -1,24 +1,25 @@
 import { Alert, Card, CardBody, Container, Image } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import toast from "react-hot-toast";
 import io from "socket.io-client";  // Importa o socket.io-client
 
 import Pagina from "../layouts/layout.Pagina";
 import ModalConfirmacao from "../../services/service.Modal-Confirmacao";
+import { getSensores, putSensor } from "../../services/service.Fetch";
 
-import ruaImg from "../../assets/images/rua4.png";
+import ruaImg from "../../assets/images/rua.png";
 import vagaD from "../../assets/images/vagaD.png";
 import vagaA from "../../assets/images/vagaA.png";
 import vagaO from "../../assets/images/vagaO.png";
 import vagaM from "../../assets/images/vagaM.png";
-import bolaD from "../../assets/images/bolaD1.png";
+import bolaD from "../../assets/images/bolaD.png";
 import bolaO from "../../assets/images/bolaO.png";
 import bolaM from "../../assets/images/bolaM.png";
 import bolaA from "../../assets/images/bolaA.png";
 
 // Configura a conexão do socket
-const socket = io("http://localhost:5000"); 
+const socket = io("http://localhost:5000");
 
 export default function DetalhaRua() {
     const params = new URLSearchParams(window.location.search);
@@ -30,64 +31,53 @@ export default function DetalhaRua() {
     const [exibirModal, setExibirModal] = useState(false);
     const [idSensor, setIdSensor] = useState(null);
 
-    // Função para buscar sensores
-    const fetchSensores = async () => {
-        try {
-            const resposta = await axios.get("http://localhost:5000/api/sensores/" + idFromUrl);
-            setSensores(resposta.data); 
-        } catch (erro) {
-            if (erro.response != null)
-                alert("Erro ao buscar sensores: " + erro.response.data.mensagem);
-            else
-                alert("Erro ao buscar sensores: API Offline");
-        }
-    };
-
     useEffect(() => {
-        fetchSensores();
-    });
+        const consultarSensores = () => {  // Define a função consultarSensores
+            getSensores(idFromUrl)
+                .then((resposta) => {
+                    if (resposta?.status)
+                        setSensores(resposta.data);
+                });
+        };
+        socket.on("Estado Atualizado", consultarSensores);  // Configura o socket para escutar atualizações de sensores
 
-    useEffect(() => {
+        consultarSensores(); // Chama consultarSensores quando o componente é montado
+
         if (listaRuas)
             setRua(listaRuas.find((rua) => rua.id === idFromUrl) || {});
+
+        return () => { // Limpa o listener quando o componente é desmontado
+            socket.off("Estado Atualizado");
+        };
     }, [listaRuas, idFromUrl]);
 
-    // Configura o socket para escutar atualizações de sensores
-    useEffect(() => {
-        socket.on("Estado Atualizado", fetchSensores);
-        return () => {
-            socket.off("Estado Atualizado"); // Remove o listener ao desmontar
-        };
-    });
-
-    const fetchSensorAtt = async (idSensor, novoEstado) => {
-        try {
-            const resposta = await axios.put(`http://localhost:5000/api/sensores/${idSensor}/${novoEstado}`);
-            setSensores((prevSensores) =>
-                prevSensores.map(sensor =>
-                    sensor.id === idSensor ? { ...sensor, estado: novoEstado } : sensor
-                )
-            );
-            alert(resposta.data);
-        } catch (erro) {
-            if (erro.data != null)
-                alert("Erro ao atualizar sensor: " + erro.data);
-            else
-                alert("Erro ao atualizar sensor: API Offline");
-        }
-    };
-
-    const lidarConfirmar = async (novoEstado) => {
-        await fetchSensorAtt(idSensor, novoEstado);
-        lidarFecharModal();
-    };
-
+    const lidarFecharModal = () => setExibirModal(false);
     const lidarExibirModal = (id) => {
         setIdSensor(id);
         setExibirModal(true);
     };
-
-    const lidarFecharModal = () => setExibirModal(false);
+    const lidarConfirmar = async (novoEstado) => {
+        toast.promise(
+            await putSensor(idSensor, novoEstado)
+                .then((resposta) => {
+                    if (resposta?.status) {
+                        setSensores((prevSensores) =>
+                            prevSensores.map(sensor =>
+                                sensor.id === idSensor ? { ...sensor, estado: novoEstado } : sensor
+                            )
+                        );
+                        lidarFecharModal();
+                        return true; // Isso será usado como mensagem de sucesso no toast
+                    }
+                    throw resposta; //lança um erro
+                }),
+            {
+                loading: 'Salvando...',
+                success: <b>Sensor Atualizado com Sucesso!</b>,
+                error: (erro) => <b>{erro.mensagem || "Erro ao Atualizar Sensor!"}</b>,
+            }
+        );
+    };
 
     return (
         <Pagina>

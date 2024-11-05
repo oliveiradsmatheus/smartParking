@@ -12,7 +12,7 @@ export default function BarraNavegacao(props) {
                         <Nav.Link href="#" as={Link} to="/relatorio">Relatórios</Nav.Link>                        
                         <Nav.Link href="#" as={Link} to="/sobre">Sobre</Nav.Link>
                     </Nav>
-                    <Button variant="warning" type="submit" as={Link} to="/busca_vagas">
+                    <Button variant="warning" type="submit" as={Link} to="/busca-vagas">
                         Buscar Vagas
                     </Button>
                 </Navbar.Collapse>

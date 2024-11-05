@@ -8,7 +8,7 @@ FROM (
         COUNT(o.ocp_id) AS total_ocupacoes -- Conta o número de ocupações para cada hora
     FROM 
         ocupacao o
-    WHERE 
+    WHERE
         o.ocp_dtInicio BETWEEN '2024-10-01' AND '2024-10-31' -- Considera o intervalo de datas
     GROUP BY 
         HOUR(o.ocp_dtInicio) -- Agrupa por hora
