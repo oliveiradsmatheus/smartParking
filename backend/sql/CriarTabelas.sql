@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS rua (
   rua_cidade VARCHAR(50) NOT NULL,
   rua_uf CHAR(2) NOT NULL,
   rua_qtdVagas INT NULL,
+  rua_estado ENUM("D", "M") NOT NULL,
   CONSTRAINT pk_rua PRIMARY KEY (rua_id)
 );
 CREATE TABLE IF NOT EXISTS sensor (

@@ -1,4 +1,5 @@
 import conectar from './Conexao.js';
+import Rua from '../modelo/Rua.js';
 
 export default class DAO_Rua {
     async consultar(termo) {
@@ -19,10 +20,21 @@ export default class DAO_Rua {
                 bairro: l.rua_bairro,
                 cidade: l.rua_cidade,
                 uf: l.rua_uf,
-                qtdVagas: l.rua_qtdVagas
+                qtdVagas: l.rua_qtdVagas,
+                estado: l.rua_estado
             };
             listaRuas.push(rua); // Adicione à listaRuas
         }
         return listaRuas; // Retorne a listaRuas como resposta
+    }
+
+    async atualizar(rua){
+        if(rua instanceof Rua){
+            const conexao = await conectar();
+            const sql = "UPDATE rua SET rua_estado=? WHERE rua_id=?";
+            const parametros = [rua.estado, rua.id];
+            await conexao.execute(sql,parametros);
+            await conexao.release();
+        }
     }
 }
