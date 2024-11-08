@@ -33,7 +33,7 @@ export default class Controle_Ocupacao {
         if (req.method.toUpperCase() === 'PUT') {
             const idOcupacao = req.params.ocp_id;
             if (idOcupacao && !isNaN(parseInt(idOcupacao)) && idOcupacao > 0) {
-                fetch('http://192.168.177.229:5000/api/ocupacoes/' + idOcupacao, {
+                fetch(`http://${process.env.IP}:5000/ocupacoes/${idOcupacao}`, {
                     method: "GET",
                     headers: { "Content-Type": "application/json" }
                 })
