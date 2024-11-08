@@ -17,10 +17,10 @@ INSERT INTO usuario (usu_nick, usu_nome, usu_email, usu_senha)
     '123'
   );
   
-INSERT INTO `rua` (`rua_id`, `rua_nome`, `rua_bairro`, `rua_cidade`,`rua_uf`, `rua_qtdVagas`, `rua_estado`)
+INSERT INTO `rua` (`rua_id`, `rua_estado`, `rua_nome`, `rua_bairro`, `rua_cidade`,`rua_uf`, `rua_qtdVagas`)
 VALUES
-  ('RUA1', 'Rua Bom Jesus', 'Jardim Brasília', 'Presidente Prudente', 'SP', 3, "D"),
-  ('RUA2', 'Rua Brigadeiro Tobias', 'Jardim Brasília', 'Presidente Prudente', 'SP', 3, "D");
+  ('RUA1', 'D', 'Rua Bom Jesus', 'Jardim Brasília', 'Presidente Prudente', 'SP', 3),
+  ('RUA2', 'D', 'Rua Brigadeiro Tobias', 'Jardim Brasília', 'Presidente Prudente', 'SP', 3);
 
 INSERT INTO `sensor` (`sen_estado`, `sen_ladoPos`,`rua_id`)
 VALUES

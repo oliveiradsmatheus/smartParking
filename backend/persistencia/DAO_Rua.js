@@ -16,12 +16,12 @@ export default class DAO_Rua {
         for (const l of dataBase) {
             const rua = {
                 id: l.rua_id,
+                estado: l.rua_estado,
                 nome: l.rua_nome,
                 bairro: l.rua_bairro,
                 cidade: l.rua_cidade,
                 uf: l.rua_uf,
-                qtdVagas: l.rua_qtdVagas,
-                estado: l.rua_estado
+                qtdVagas: l.rua_qtdVagas
             };
             listaRuas.push(rua); // Adicione à listaRuas
         }
