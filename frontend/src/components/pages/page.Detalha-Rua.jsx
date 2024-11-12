@@ -2,13 +2,12 @@ import { Alert, Card, CardBody, Container, Image } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import io from "socket.io-client";
+import io from "socket.io-client";  // Importa o socket.io-client
 
 import Pagina from "../layouts/layout.Pagina";
 import ModalConfirmacao from "../../services/service.Modal-Confirmacao";
 import { getSensores, putSensor } from "../../services/service.Fetch";
 
-import ruaImg from "../../assets/images/rua.png";
 import vagaD from "../../assets/images/vagaD.png";
 import vagaA from "../../assets/images/vagaA.png";
 import vagaO from "../../assets/images/vagaO.png";
@@ -18,13 +17,18 @@ import bolaO from "../../assets/images/bolaO.png";
 import bolaM from "../../assets/images/bolaM.png";
 import bolaA from "../../assets/images/bolaA.png";
 
-const socket = io(`http://${process.env.REACT_APP_IP}:5000`);
+import style from "../../style/detalheRua.module.css";
+// Configura a conexão do socket
+const socket = io(`http://${process.env.REACT_APP_IP}:5000"`);
 
 export default function DetalhaRua() {
+    const adminLogado = useSelector((state) => state.login);
+
     const params = new URLSearchParams(window.location.search);
     const idFromUrl = params.get('id');
-    const listaRuas = useSelector((state) => state.ruas.ruas);
-    const adminLogado = useSelector((state) => state.login);
+    
+    const ruas = useSelector((state) => state.ruas.ruas);
+    const [listaRuas, setListaRuas] = useState(ruas);
     const [rua, setRua] = useState(null);
     const [sensores, setSensores] = useState([]);
     const [exibirModal, setExibirModal] = useState(false);
@@ -129,39 +133,38 @@ export default function DetalhaRua() {
                                 </Alert>
                             </div>
                             <strong className="pb-3">1º Quadra</strong>
-                            <div className="position-relative">
-                                <Image src={ruaImg} style={{ objectFit: 'scale-down' }} className="img-fluid" />
-                                {sensores.map((s) => (
-                                    (
-                                        adminLogado ? (
-                                            <Image
-                                                type="Button"
-                                                onClick={() => lidarExibirModal(s.id, s.estado)}
-                                                key={s.id}
-                                                src={
-                                                    s.estado === 'D' ? vagaD :
-                                                        s.estado === 'A' ? vagaA :
-                                                            s.estado === 'O' ? vagaO :
-                                                                s.estado === 'M' ? vagaM : null
-                                                }
-                                                className="position-absolute"
-                                                style={{ top: `${(s.ladoPos[1] - 1) * 26}%`, [s.ladoPos[0] === 'R' ? 'right' : 'left']: '30px', width: '110px' }}
-                                            />
-                                        ) : (
-                                            <Image
-                                                key={s.id}
-                                                src={
-                                                    s.estado === 'D' ? vagaD :
-                                                        s.estado === 'A' ? vagaA :
-                                                            s.estado === 'O' ? vagaO :
-                                                                s.estado === 'M' ? vagaM : null
-                                                }
-                                                className="position-absolute"
-                                                style={{ top: `${(s.ladoPos[1] - 1) * 26}%`, [s.ladoPos[0] === 'R' ? 'right' : 'left']: '30px', width: '110px' }}
-                                            />
+                            <div className={style.rua} style={{ height: sensores.length * 30 + 'vh' }}>
+
+                                {
+                                    sensores.map((s) => (
+                                        (
+                                            adminLogado ? (
+                                                <Image
+                                                    type="Button"
+                                                    onClick={() => lidarExibirModal(s.id, s.estado)}
+                                                    key={s.id}
+                                                    src={
+                                                        s.estado === 'D' ? vagaD :
+                                                            s.estado === 'A' ? vagaA :
+                                                                s.estado === 'O' ? vagaO :
+                                                                    s.estado === 'M' ? vagaM : null
+                                                    }
+                                                    className={style.vaga}
+                                                />
+                                            ) : (
+                                                <Image
+                                                    key={s.id}
+                                                    src={
+                                                        s.estado === 'D' ? vagaD :
+                                                            s.estado === 'A' ? vagaA :
+                                                                s.estado === 'O' ? vagaO :
+                                                                    s.estado === 'M' ? vagaM : null
+                                                    }
+                                                    className={style.vaga}
+                                                />
+                                            )
                                         )
-                                    )
-                                ))}
+                                    ))}
                             </div>
                         </Card>
                     </Container>

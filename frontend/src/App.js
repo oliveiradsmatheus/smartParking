@@ -7,6 +7,7 @@ import { getRuas } from "./services/service.Fetch";
 import DetalhaRua from "./components/pages/page.Detalha-Rua";
 import BuscaVagas from "./components/pages/page.Busca-Vagas";
 import Relatorio from "./components/pages/page.Relatorio";
+import EstadoRua from "./components/pages/page.Estado-Rua";
 import Home from "./components/pages/page.Home";
 
 import Error404 from "./components/views/view.Error-404";
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/sobre" element={<Sobre />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/relatorio" element={<Relatorio />} />
+                <Route path="/estado-rua" element={<EstadoRua />} />
                 <Route path="/" element={<Home />} />
                 <Route path="*" element={<Error404 />} />
             </Routes>

@@ -1,0 +1,13 @@
+.rua{
+    background-image: url("../assets/images/rua.png");
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    padding-right: 2vw;
+    justify-content: space-evenly;
+}
+
+.vaga{
+    height: 30vh;
+}
