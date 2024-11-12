@@ -47,15 +47,15 @@ const io = new Server(server, {
     pingInterval: 25000 // intervalo do ping
 });
 
-io.on('connection', (socket) => {
-    console.log("Cliente Conectado");
+// io.on('connection', (socket) => {
+//     console.log("Cliente Conectado");
 
-    // Emite uma mensagem específica para o cliente recém-conectado
-    socket.emit("mensagemServidor", "Servidor Escutando !!!");
+//     // Emite uma mensagem específica para o cliente recém-conectado
+//     socket.emit("mensagemServidor", "Servidor Escutando !!!");
 
-    // Se quiser emitir para todos os clientes conectados, você pode usar io.emit()
-    io.emit("mensagemGlobal", "Novo cliente conectado!");
-});
+//     // Se quiser emitir para todos os clientes conectados, você pode usar io.emit()
+//     io.emit("mensagemGlobal", "Novo cliente conectado!");
+// });
 
 server.listen(porta, host, () => {
     console.log(`Servidor escutando em http://${host}:${porta}`)

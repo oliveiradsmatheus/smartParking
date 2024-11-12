@@ -124,4 +124,33 @@ export const putSensor = async (idSensor, novoEstado) => {
                     mensagem: "Erro ao atualizar sensor: " + erro.message }
     }
 }
+
+export const putRua = async (idRua, novoEstado) => {
+    try {
+        return await axios.put(`http://${url}:5000/ruas/${idRua}/${novoEstado}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+    }
+    catch (erro) {
+        if (erro.response) {
+            const status = erro.response?.status;
+            if (status === 404)
+                return{ status: false,
+                        mensagem: "Erro ao atualizar rua: Rotas Incorretas!" }
+            else
+                return{ status: false,
+                        mensagem: `Erro ao atualizar rua: ${status} - ${erro.response?.data || "Erro desconhecido"}` }
+        }
+        else if (erro.request)
+            return{ status: false,
+                    mensagem: "Erro ao atualizar rua: API Offline!" }
+        else
+            return{ status: false,
+                    mensagem: "Erro ao atualizar rua: " + erro.message }
+    }
+}
 //==============================================//

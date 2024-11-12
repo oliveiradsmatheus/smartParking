@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 import { getRuas } from "./services/service.Fetch";
@@ -17,6 +17,7 @@ import Sobre from "./components/views/view.Sobre";
 function App() {
     const dispatch = useDispatch();
     const token = localStorage.getItem("token");
+    const adminLogado = useSelector((state) => state.login);
 
     useEffect(() => {
         getRuas()
@@ -33,7 +34,7 @@ function App() {
                 localStorage.removeItem("token");
                 dispatch({ type: "DESLOGAR" });
             }
-            else{
+            else {
                 dispatch({ type: "LOGAR", payload: tokenData.nick.toUpperCase() });
             }
         }
@@ -47,7 +48,7 @@ function App() {
                 <Route path="/sobre" element={<Sobre />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/relatorio" element={<Relatorio />} />
-                <Route path="/estado-rua" element={<EstadoRua />} />
+                {adminLogado && <Route path="/estado-rua" element={<EstadoRua />} />}
                 <Route path="/" element={<Home />} />
                 <Route path="*" element={<Error404 />} />
             </Routes>

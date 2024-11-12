@@ -12,7 +12,6 @@ export default function Perfil(props) {
     const Deslogar = () => {
         dispatch({ type: "DESLOGAR" });
         localStorage.removeItem("token");
-        window.location.reload(true);
     };
 
     return (

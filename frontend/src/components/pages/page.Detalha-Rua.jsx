@@ -26,9 +26,8 @@ export default function DetalhaRua() {
 
     const params = new URLSearchParams(window.location.search);
     const idFromUrl = params.get('id');
-    
-    const ruas = useSelector((state) => state.ruas.ruas);
-    const [listaRuas, setListaRuas] = useState(ruas);
+
+    const listaRuas = useSelector((state) => state.ruas.ruas);
     const [rua, setRua] = useState(null);
     const [sensores, setSensores] = useState([]);
     const [exibirModal, setExibirModal] = useState(false);
@@ -172,10 +171,11 @@ export default function DetalhaRua() {
             </Container>
 
             <ModalConfirmacao
+                quem={"Detalha-Rua"}
                 exibir={exibirModal}
                 lidarFechar={lidarFecharModal}
                 lidarConfirmar={lidarConfirmar}
-                estadoSensor={estadoSensor}
+                estadoNovo={estadoSensor}
             />
         </Pagina>
     );
