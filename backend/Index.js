@@ -68,6 +68,7 @@ server.listen(porta, host, () => {
         let sql = `
             CREATE TABLE IF NOT EXISTS rua (
                 rua_id VARCHAR(50) NOT NULL,
+                rua_estado ENUM ("D", "M") NOT NULL,
                 rua_nome VARCHAR(100) NOT NULL,
                 rua_bairro VARCHAR(50) NOT NULL,
                 rua_cidade VARCHAR(50) NOT NULL,
