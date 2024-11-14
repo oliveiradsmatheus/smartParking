@@ -2,7 +2,7 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-String IP = "192.168.236.229";
+String IP = "192.168.6.229";
 unsigned long timeout = 5000;
 const char *REDE = "N5";
 const char *SENHA = "desconhecido123";
@@ -12,18 +12,21 @@ void conectar();
 void EsperarRespostaIP();
 void ProcessarResposta_API(int httpResposta, HTTPClient &http);
 
-//==================== SETUP ====================//
 // cppcheck-suppress unusedFunction
 void setup() {
-	Serial.begin(115200);
-	Serial1.begin(115200, SERIAL_8N1, 16, 17);
-	pinMode(2, OUTPUT);
-	EsperarRespostaIP();
-	conectar();
+    Serial.begin(115200);
+    Serial1.begin(115200, SERIAL_8N1, 16, 17);
+    pinMode(2, OUTPUT);
+    EsperarRespostaIP();
+    conectar();
 }
 
 // cppcheck-suppress unusedFunction
 void loop() {
+	if (!WifiOn()) {
+		Serial.println("Reconectando ao WiFi...");
+		conectar();
+	}
 	if (Serial1.available()) {
 		if (WifiOn()) {
 			String resp = Serial1.readString();
@@ -65,11 +68,6 @@ void loop() {
 			Serial.println("Reconectando ao WiFi...");
 			conectar();
 		}
-	}
-	
-	if (!WifiOn()) {
-		Serial.println("Reconectando ao WiFi...");
-		conectar();
 	}
 }
 //===============================================//
@@ -135,6 +133,7 @@ void conectar() {
 		t--;
 	}
 	if (WiFi.status() == WL_CONNECTED) {
+		Serial.println(WiFi.localIP());
 		digitalWrite(2, HIGH);
 		Serial.println("\nConectado...yeey :)");
 	}
