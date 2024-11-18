@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import axios from "axios";
 
-const url = process.env.REACT_APP_IP;
+const url = "localhost";
 
 //===========================// USUARIOS //============================//
 export const getRelatorio = async (tipoRel, idRua, dtInicio, dtFim) => {
@@ -104,7 +104,7 @@ export const getSensores = async (idFromUrl) => {
 
 export const putSensor = async (idSensor, novoEstado) => {
     try {
-        return await axios.put(`http://${url}:5000/sensores/${idSensor}/${novoEstado}`);
+        return await axios.patch(`http://${url}:5000/sensores/${idSensor}/${novoEstado}`);
     }
     catch (erro) {
         if (erro.response) {

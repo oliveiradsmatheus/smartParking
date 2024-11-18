@@ -120,11 +120,14 @@ export default function EstadoRua() {
                                                 <br />
                                                 <br />
                                                 <strong>
-                                                    Estado da Rua: {rua.estado === 'D' ? "Disponível" : "Manutenção"}
+                                                    Estado da Rua:
+                                                    <p style={{ color: rua.estado === 'D' ? "#00F465" : "red" }}>
+                                                        {rua.estado === 'D' ? "Disponível" : "Manutenção"}
+                                                    </p>
                                                 </strong>
                                             </Card.Text>
                                             <Button variant={rua.estado === 'D' ? "danger" : "success"}
-                                                type="submit" style={{ marginTop: "1rem" }}
+                                                type="submit"
                                                 onClick={() => { lidarExibirModal(rua.id, rua.estado) }}
                                             >
                                                 {

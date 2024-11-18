@@ -24,6 +24,18 @@ export default class DAO_Sensor {
         }
         return listaSensores; // Retorne a listaSensores como resposta
     }
+    
+    async buscarSensor(sensor) {
+        if(sensor instanceof Sensor){
+            const conexao = await conectar(); // Conecte-se ao banco de dados
+            let sql = "SELECT * FROM sensor WHERE sen_id=?";
+            let parametros = [sensor.id];
+            const [dataBase, campos] = await conexao.execute(sql, parametros); // Execute a consulta
+            await conexao.release();
+            return { estado: dataBase[0].sen_estado }
+        }
+        return null;
+    }
 
     async atualizarESP(sensor){
         if(sensor instanceof Sensor){

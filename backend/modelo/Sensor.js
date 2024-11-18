@@ -28,6 +28,11 @@ export default class Sensor{
         return await sensorDAO.consultar(termo);
     }
 
+    async buscarSensor(){
+        const sensorDAO = new DAO_Sensor();
+        return await sensorDAO.buscarSensor(this);
+    }
+
     async atualizarESP(){
         const sensorDAO = new DAO_Sensor();
         await sensorDAO.atualizarESP(this);

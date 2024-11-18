@@ -39,23 +39,12 @@ app.get('/', (req, res) => {
 //########## SERVIDOR ##########//
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors: {
-        origin: "*",
-        methods: ["GET", "PUT", "PATCH", "DELETE", "UPDATE"],
-    },
-    pingTimeout: 50000, // aumenta o timeout de ping
-    pingInterval: 25000 // intervalo do ping
+    cors: { origin: "*" }
 });
 
-// io.on('connection', (socket) => {
-//     console.log("Cliente Conectado");
-
-//     // Emite uma mensagem específica para o cliente recém-conectado
-//     socket.emit("mensagemServidor", "Servidor Escutando !!!");
-
-//     // Se quiser emitir para todos os clientes conectados, você pode usar io.emit()
-//     io.emit("mensagemGlobal", "Novo cliente conectado!");
-// });
+io.on('connection', () => {
+    console.log("Cliente Conectado");
+});
 
 server.listen(porta, host, () => {
     console.log(`Servidor escutando em http://${host}:${porta}`)
