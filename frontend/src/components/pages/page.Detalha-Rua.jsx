@@ -19,7 +19,7 @@ import bolaA from "../../assets/images/bolaA.png";
 
 import style from "../../style/detalheRua.module.css";
 // Configura a conexão do socket
-const socket = io("http://localhost:5000");
+const socket = io("http://192.168.69.229:5000");
 
 export default function DetalhaRua() {
     const adminLogado = useSelector((state) => state.login);

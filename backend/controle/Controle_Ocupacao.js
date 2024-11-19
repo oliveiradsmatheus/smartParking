@@ -13,7 +13,7 @@ export default class Controle_Ocupacao {
                 const ocupacao = new Ocupacao(0, dtInicio, "", 0, idSensor);
                 ocupacao.gravarESP()
                 .then(() => {
-                    res.status(200).send("OK:"+ocupacao.id.toString());
+                    res.status(200).send("Ocupacao Gravada:"+ocupacao.id.toString());
                 })
                 .catch((erro) => {
                     console.error(erro);

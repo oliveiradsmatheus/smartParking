@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import axios from "axios";
 
-const url = "localhost";
+const url = "192.168.69.229";
 
 //===========================// USUARIOS //============================//
 export const getRelatorio = async (tipoRel, idRua, dtInicio, dtFim) => {
