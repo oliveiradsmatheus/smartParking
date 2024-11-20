@@ -1,12 +1,12 @@
 import toast from "react-hot-toast";
 import axios from "axios";
 
-const url = "192.168.69.229";
+const url = "http://localhost:5000";
 
 //===========================// USUARIOS //============================//
 export const getRelatorio = async (tipoRel, idRua, dtInicio, dtFim) => {
     try {
-        return await axios.get(`http://${url}:5000/relatorios`, {
+        return await axios.get(`${url}/relatorios`, {
             params: {
                 tipo: tipoRel,
                 rua: idRua,
@@ -35,7 +35,7 @@ export const getRelatorio = async (tipoRel, idRua, dtInicio, dtFim) => {
 //============// RUAS //============//
 export const getRuas = async () => {
     try {
-        return await axios.get(`http://${url}:5000/ruas`);
+        return await axios.get(`${url}/ruas`);
     }
     catch (erro) {
         if (erro.response) {  // A requisição foi feita e o servidor respondeu com um status diferente de 2xx
@@ -58,7 +58,7 @@ export const getRuas = async () => {
 //==============// USUARIOS //==============//
 export const getUsuarios = async (nick, senha) => {
     try {
-        return await axios.post(`http://${url}:5000/usuarios`,
+        return await axios.post(`${url}/usuarios`,
             { nick: nick, senha: senha }
         );
     }
@@ -84,7 +84,7 @@ export const getUsuarios = async (nick, senha) => {
 //================// SENSORES //================//
 export const getSensores = async (idFromUrl) => {
     try {
-        return await axios.get(`http://${url}:5000/sensores/${idFromUrl}`);
+        return await axios.get(`${url}/sensores/${idFromUrl}`);
     }
     catch (erro) {
         if (erro.response) {
@@ -104,7 +104,7 @@ export const getSensores = async (idFromUrl) => {
 
 export const putSensor = async (idSensor, novoEstado) => {
     try {
-        return await axios.patch(`http://${url}:5000/sensores/${idSensor}/${novoEstado}`);
+        return await axios.patch(`${url}/sensores/${idSensor}/${novoEstado}`);
     }
     catch (erro) {
         if (erro.response) {
@@ -127,7 +127,7 @@ export const putSensor = async (idSensor, novoEstado) => {
 
 export const putRua = async (idRua, novoEstado) => {
     try {
-        return await axios.put(`http://${url}:5000/ruas/${idRua}/${novoEstado}`,
+        return await axios.put(`${url}/ruas/${idRua}/${novoEstado}`,
             {
                 headers: {
                     'Content-Type': 'application/json'

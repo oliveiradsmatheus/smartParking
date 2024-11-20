@@ -30,7 +30,7 @@ export default class Controle_Ocupacao {
     }
 
     atualizarESP(req, res) {
-        if (req.method.toUpperCase() === 'PUT') {
+        if (req.method.toUpperCase() === 'PUT' || req.method == 'PUT') {
             const idOcupacao = req.params.ocp_id;
             if (idOcupacao && !isNaN(parseInt(idOcupacao)) && idOcupacao > 0) {
                 fetch(`http://${process.env.IP}:5000/ocupacoes/${idOcupacao}`, {

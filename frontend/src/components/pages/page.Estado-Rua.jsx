@@ -121,10 +121,11 @@ export default function EstadoRua() {
                                                 <br />
                                                 <strong>
                                                     Estado da Rua:
-                                                    <p style={{ color: rua.estado === 'D' ? "#00F465" : "red" }}>
+                                                    <span style={{ color: rua.estado === 'D' ? "#00F465" : "red" }}>
                                                         {rua.estado === 'D' ? "Disponível" : "Manutenção"}
-                                                    </p>
+                                                    </span>
                                                 </strong>
+
                                             </Card.Text>
                                             <Button variant={rua.estado === 'D' ? "danger" : "success"}
                                                 type="submit"

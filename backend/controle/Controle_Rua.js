@@ -29,7 +29,7 @@ export default class Controle_Rua{
     atualizar(req, res)
     {
         res.type("application/json");
-        if ((req.method == 'PUT' || req.method == 'PATCH') && req.is("application/json")){
+        if ((req.method == 'PUT' || req.method == 'PATCH')){
             const id = req.params.rua_id;
             const estado = req.params.rua_estado;
             if (id && estado)

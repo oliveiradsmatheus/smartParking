@@ -12,8 +12,8 @@ import conectar from './persistencia/Conexao.js';
 
 const app = express();
 dotenv.config();
-const host = process.env.IP;
-const porta = 4000;
+const host = "0.0.0.0";
+const porta = 5000;
 
 //########## MIDDLEWARE e CORS ##########//
 app.use(express.json());

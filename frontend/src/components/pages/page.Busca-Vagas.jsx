@@ -52,7 +52,7 @@ export default function BuscaVagas() {
                                     <Rua key={rua.id} rua={rua} />
                                 ))
                             ) : (
-                                <p>Nenhum resultado encontrado.</p> // Usar um <p> aqui para manter a semântica
+                                <p>Nenhum resultado encontrado.</p> // Usando <p> aqui para manter a semântica
                             )
                         }
                     </CardBody>

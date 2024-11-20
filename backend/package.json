@@ -1,6 +1,6 @@
 {
   "name": "servidor",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "API_SmartParking",
   "main": "index.js",
   "type": "module",

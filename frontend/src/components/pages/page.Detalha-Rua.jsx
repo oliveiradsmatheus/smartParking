@@ -19,7 +19,7 @@ import bolaA from "../../assets/images/bolaA.png";
 
 import style from "../../style/detalheRua.module.css";
 // Configura a conexão do socket
-const socket = io("http://192.168.69.229:5000");
+const socket = io("http://localhost:5000/");
 
 export default function DetalhaRua() {
     const adminLogado = useSelector((state) => state.login);
@@ -103,7 +103,7 @@ export default function DetalhaRua() {
                                 <div>Quantidade de Vagas: {rua.qtdVagas || ""}</div>
                             </>
                         ) : (
-                            <p>Carregando dados da rua...</p>
+                            <span>Carregando dados da rua...</span>
                         )}
                     </CardBody>
                     <Container className="w-75 position-relative">
@@ -114,34 +114,32 @@ export default function DetalhaRua() {
                                     <div className="d-flex justify-content-between mt-4">
                                         <div className="d-flex align-items-center">
                                             <Image src={bolaD} style={{ width: '20px' }} roundedCircle />
-                                            <p className="mb-0 ms-2">Disponível</p>
+                                            <span className="mb-0 ms-2">Disponível</span>
                                         </div>
                                         <div className="d-flex align-items-center">
                                             <Image src={bolaA} style={{ width: '18px' }} roundedCircle />
-                                            <p className="mb-0 ms-2">Em Análise</p>
+                                            <span className="mb-0 ms-2">Em Análise</span>
                                         </div>
                                         <div className="d-flex align-items-center">
                                             <Image src={bolaO} style={{ width: '18px' }} roundedCircle />
-                                            <p className="mb-0 ms-2">Ocupado</p>
+                                            <span className="mb-0 ms-2">Ocupado</span>
                                         </div>
                                         <div className="d-flex align-items-center">
                                             <Image src={bolaM} style={{ width: '18px' }} roundedCircle />
-                                            <p className="mb-0 ms-2">Manutenção</p>
+                                            <span className="mb-0 ms-2">Manutenção</span>
                                         </div>
                                     </div>
                                 </Alert>
                             </div>
                             <strong className="pb-3">1º Quadra</strong>
                             <div className={style.rua} style={{ height: sensores.length * 30 + 'vh' }}>
-
-                                {
-                                    sensores.map((s) => (
-                                        (
-                                            adminLogado ? (
+                                <div className={style.vagasContainer}>
+                                    {sensores.map((s) => (
+                                        <div key={s.id} className={style.vagaWrapper}>
+                                            {adminLogado ? (
                                                 <Image
                                                     type="Button"
                                                     onClick={() => lidarExibirModal(s.id, s.estado)}
-                                                    key={s.id}
                                                     src={
                                                         s.estado === 'D' ? vagaD :
                                                             s.estado === 'A' ? vagaA :
@@ -152,7 +150,6 @@ export default function DetalhaRua() {
                                                 />
                                             ) : (
                                                 <Image
-                                                    key={s.id}
                                                     src={
                                                         s.estado === 'D' ? vagaD :
                                                             s.estado === 'A' ? vagaA :
@@ -161,9 +158,10 @@ export default function DetalhaRua() {
                                                     }
                                                     className={style.vaga}
                                                 />
-                                            )
-                                        )
+                                            )}
+                                        </div>
                                     ))}
+                                </div>
                             </div>
                         </Card>
                     </Container>
