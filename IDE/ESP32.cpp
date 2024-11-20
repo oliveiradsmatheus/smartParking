@@ -2,7 +2,7 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-String IP = "https://luizzoff-pi1-smart-parking.vercel.app";
+String IP = "http://192.168.69.229:5000";
 unsigned long timeout = 5000;
 const char *REDE = "N5";
 const char *SENHA = "desconhecido123";
@@ -29,9 +29,9 @@ void loop() {
 		Serial.println("Reconectando ao WiFi...");
 		conectar();
 	}
-	if (Serial.available()) {
+	if (Serial1.available()) {
 		if (WifiOn()) {
-			String resp = Serial.readString();
+			String resp = Serial1.readString();
 			Serial.println("\n\n\nResposta Recebida Mega: " + resp);
 			if (resp != "") {
 				int httpResposta;
@@ -125,13 +125,15 @@ bool WifiOn() {
 void conectar() {
 	WiFi.mode(WIFI_OFF);
 	delay(1000);
-	int t = 10;
+	int t = 2;
 	WiFi.mode(WIFI_STA);
 	delay(500);
 	WiFi.begin(REDE, SENHA);
 	while (WiFi.status() != WL_CONNECTED && t > 0) {
 		delay(1000);
-		Serial1.print("WiFi Off");
+		if(!Serial1.available()){
+			Serial1.print("WiFi Off");
+		}
 		Serial.print(".");
 		t--;
 	}
