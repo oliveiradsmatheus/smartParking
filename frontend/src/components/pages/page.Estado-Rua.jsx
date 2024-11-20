@@ -40,11 +40,9 @@ export default function EstadoRua() {
     const lidarExibirModal = (id, estado) => {
         setIdRua(id);
         setEstadoRua(estado);
-        console.log(id, estado);
         setExibirModal(true);
     };
     const lidarConfirmar = async (novoEstado) => {
-        console.log(idRua, novoEstado);
         toast.promise(
             putRua(idRua, novoEstado)
                 .then((resposta) => {
@@ -120,22 +118,24 @@ export default function EstadoRua() {
                                                 <br />
                                                 <br />
                                                 <strong>
-                                                    Estado da Rua:
-                                                    <span style={{ color: rua.estado === 'D' ? "#00F465" : "red" }}>
-                                                        {rua.estado === 'D' ? "Disponível" : "Manutenção"}
-                                                    </span>
+                                                    Estado da Rua
                                                 </strong>
+                                                <br />
+                                                <span style={{ color: rua.estado === 'D' ? "#00F465" : "red" }}>
+                                                    {rua.estado === 'D' ? "Disponível" : "Manutenção"}
+                                                </span>
 
                                             </Card.Text>
-                                            <Button variant={rua.estado === 'D' ? "danger" : "success"}
+                                            <Button variant="primary"
                                                 type="submit"
+                                                style={{fontWeight: "500"}}
                                                 onClick={() => { lidarExibirModal(rua.id, rua.estado) }}
                                             >
                                                 {
                                                     rua.estado === 'D' ?
-                                                        "Interditar"
+                                                        "INTERDITAR"
                                                         :
-                                                        "Liberar"
+                                                        "LIBERAR"
                                                 }
                                             </Button>
                                         </Card.Body>

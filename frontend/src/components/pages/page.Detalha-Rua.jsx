@@ -2,11 +2,13 @@ import { Alert, Card, CardBody, Container, Image } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import io from "socket.io-client";  // Importa o socket.io-client
-
 import Pagina from "../layouts/layout.Pagina";
 import ModalConfirmacao from "../../services/service.Modal-Confirmacao";
 import { getSensores, putSensor } from "../../services/service.Fetch";
+import io from "socket.io-client";  // Importa o socket.io-client
+
+import { ToastContainer, toast as toastify } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import vagaD from "../../assets/images/vagaD.png";
 import vagaA from "../../assets/images/vagaA.png";
@@ -33,14 +35,21 @@ export default function DetalhaRua() {
     const [exibirModal, setExibirModal] = useState(false);
     const [idSensor, setIdSensor] = useState(null);
     const [estadoSensor, setEstadoSensor] = useState(null);
+    const[quemAtt, setQuemAtt] = useState(false);
 
     useEffect(() => {
         const atualizarSensores = () => {
-            getSensores(idFromUrl)
-                .then((resposta) => {
-                    if (resposta?.status)
-                        setSensores(resposta.data);
-                });
+            if(!quemAtt){
+                getSensores(idFromUrl)
+                    .then((resposta) => {
+                        if (resposta?.status){
+                                toastify.success('Atualização de Vaga !');
+                            setSensores(resposta.data);
+                        }
+                    });
+            }
+            else
+                setQuemAtt(false);
         };
 
         // Configura o socket para escutar atualizações de sensores
@@ -50,7 +59,7 @@ export default function DetalhaRua() {
         return () => {
             socket.off("Estado Atualizado", atualizarSensores);
         };
-    }, [idFromUrl]);
+    }, [idFromUrl, quemAtt]);
 
     useEffect(() => {
         getSensores(idFromUrl)
@@ -69,6 +78,7 @@ export default function DetalhaRua() {
         setExibirModal(true);
     };
     const lidarConfirmar = async (novoEstado) => {
+        setQuemAtt(true);
         toast.promise(
             putSensor(idSensor, novoEstado)
                 .then((resposta) => {
@@ -103,7 +113,7 @@ export default function DetalhaRua() {
                                 <div>Quantidade de Vagas: {rua.qtdVagas || ""}</div>
                             </>
                         ) : (
-                            <span>Carregando dados da rua...</span>
+                            <p>Carregando dados da rua...</p>
                         )}
                     </CardBody>
                     <Container className="w-75 position-relative">
@@ -114,32 +124,34 @@ export default function DetalhaRua() {
                                     <div className="d-flex justify-content-between mt-4">
                                         <div className="d-flex align-items-center">
                                             <Image src={bolaD} style={{ width: '20px' }} roundedCircle />
-                                            <span className="mb-0 ms-2">Disponível</span>
+                                            <p className="mb-0 ms-2">Disponível</p>
                                         </div>
                                         <div className="d-flex align-items-center">
                                             <Image src={bolaA} style={{ width: '18px' }} roundedCircle />
-                                            <span className="mb-0 ms-2">Em Análise</span>
+                                            <p className="mb-0 ms-2">Em Análise</p>
                                         </div>
                                         <div className="d-flex align-items-center">
                                             <Image src={bolaO} style={{ width: '18px' }} roundedCircle />
-                                            <span className="mb-0 ms-2">Ocupado</span>
+                                            <p className="mb-0 ms-2">Ocupado</p>
                                         </div>
                                         <div className="d-flex align-items-center">
                                             <Image src={bolaM} style={{ width: '18px' }} roundedCircle />
-                                            <span className="mb-0 ms-2">Manutenção</span>
+                                            <p className="mb-0 ms-2">Manutenção</p>
                                         </div>
                                     </div>
                                 </Alert>
                             </div>
                             <strong className="pb-3">1º Quadra</strong>
                             <div className={style.rua} style={{ height: sensores.length * 30 + 'vh' }}>
-                                <div className={style.vagasContainer}>
-                                    {sensores.map((s) => (
-                                        <div key={s.id} className={style.vagaWrapper}>
-                                            {adminLogado ? (
+
+                                {
+                                    sensores.map((s) => (
+                                        (
+                                            adminLogado ? (
                                                 <Image
                                                     type="Button"
                                                     onClick={() => lidarExibirModal(s.id, s.estado)}
+                                                    key={s.id}
                                                     src={
                                                         s.estado === 'D' ? vagaD :
                                                             s.estado === 'A' ? vagaA :
@@ -150,6 +162,7 @@ export default function DetalhaRua() {
                                                 />
                                             ) : (
                                                 <Image
+                                                    key={s.id}
                                                     src={
                                                         s.estado === 'D' ? vagaD :
                                                             s.estado === 'A' ? vagaA :
@@ -158,16 +171,19 @@ export default function DetalhaRua() {
                                                     }
                                                     className={style.vaga}
                                                 />
-                                            )}
-                                        </div>
+                                            )
+                                        )
                                     ))}
-                                </div>
                             </div>
                         </Card>
                     </Container>
                 </Card>
             </Container>
-
+            <ToastContainer
+                position="bottom-right"
+                autoClose={2000}
+                hideProgressBar={true}
+            />
             <ModalConfirmacao
                 quem={"Detalha-Rua"}
                 exibir={exibirModal}

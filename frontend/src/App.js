@@ -50,6 +50,7 @@ function App() {
                 <Route path="/relatorio" element={<Relatorio />} />
                 {adminLogado && <Route path="/estado-rua" element={<EstadoRua />} />}
                 <Route path="/" element={<Home />} />
+                <Route path="/PI1-SmartParking" element={<Home />} />
                 <Route path="*" element={<Error404 />} />
             </Routes>
         </BrowserRouter>

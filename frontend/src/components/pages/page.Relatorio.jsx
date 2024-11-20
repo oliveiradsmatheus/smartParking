@@ -1,4 +1,4 @@
-import { Container, Form, ListGroup, Row, Col, Card, Button, CardText } from 'react-bootstrap';
+import { Container, Form, ListGroup, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector } from "react-redux";
 
@@ -15,6 +15,7 @@ export default function Relatorio(props) {
     const [inicioConsulta, setInicioConsulta] = useState(false);
     const [pesquisa, setPesquisa] = useState('');
     const listaRef = useRef(null); // Referência para a lista
+    const [carregando, setCarregando] = useState(false); //spinner
 
     const [infoRua, setInfoRua] = useState({});
     const [tempInfoRua, setTempInfoRua] = useState({});
@@ -48,9 +49,9 @@ export default function Relatorio(props) {
             setMostrarOpcoes(false); // Fecha a lista
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         setOpcoesFiltradas(listaRuasRedux);
-    },[listaRuasRedux]);
+    }, [listaRuasRedux]);
 
     useEffect(() => {
         document.addEventListener('mousedown', lidarClickFora); // Adiciona o listener
@@ -72,16 +73,25 @@ export default function Relatorio(props) {
 
         const form = evento.currentTarget;
         if (form.checkValidity()) {
-            setBuscado(false); // Marca como não buscado antes da nova tentativa
-            setTempTipo(tipoRel);
-            setTempInfoRua(infoRua);
-            getRelatorio(tipoRel, idRua, dtInicio, dtFim)
-                .then((resposta) => {
-                    if (resposta?.status) {
-                        setResposta(resposta.data); // Acesse a resposta corretamente
-                        setBuscado(true);
-                    }
-                })
+            setCarregando(true); // Exibe o spinner imediatamente
+
+            // Usando setTimeout para adicionar um delay de 2 segundos
+            setTimeout(() => {
+                setBuscado(false); // Marca como não buscado antes da nova tentativa
+                setTempTipo(tipoRel);
+                setTempInfoRua(infoRua);
+
+                getRelatorio(tipoRel, idRua, dtInicio, dtFim)
+                    .then((resposta) => {
+                        if (resposta?.status) {
+                            setResposta(resposta.data); // Acesse a resposta corretamente
+                            setBuscado(true);
+                        }
+                    })
+                    .finally(() => {
+                        setCarregando(false); // Oculta o spinner após a resposta
+                    });
+            }, 2000); // Delay de 2 segundos (2000 milissegundos)
         }
         else {
             setFormValidado(true);
@@ -192,8 +202,22 @@ export default function Relatorio(props) {
                                 </Form.Group>
                             </Col>
                             <Col xs={2} className="pt-4 mt-2">
-                                <Button onClick={() => { setInicioConsulta(true) }} type="submit" variant="primary">
-                                    Confirmar
+                                <Button disabled={carregando} onClick={() => { setInicioConsulta(true) }} type="submit" variant="primary">
+                                    {carregando ? (
+                                        <>
+                                            <Spinner
+                                                as="span"
+                                                animation="border"
+                                                size="sm"
+                                                role="status"
+                                                aria-hidden="true"
+                                                className="me-2"
+                                            />
+                                            Carregando...
+                                        </>
+                                    ) : (
+                                        "Confirmar"
+                                    )}
                                 </Button>
                             </Col>
                         </Row>
@@ -204,7 +228,7 @@ export default function Relatorio(props) {
                         inicioConsulta ? (
                             resposta.rua != null ? (
                                 buscado && Object.keys(resposta).length > 0 && (
-                                    <CardText>
+                                    <div>
                                         <h4>{tempInfoRua.nome} - {tempInfoRua.bairro}</h4>
                                         <h6 className="mb-5">{tempInfoRua.cidade} - {tempInfoRua.uf}</h6>
                                         {
@@ -234,14 +258,19 @@ export default function Relatorio(props) {
                                                         }
                                                     </>
                                                     :
-                                                    tempTipo === '3' && (
-                                                        <>
-                                                            <h5>Tempo Médio de Ocupação</h5>
-                                                            <h5>{resposta.horas}H:{resposta.minutos}M</h5>
-                                                        </>
-                                                    )
+                                                    <>
+                                                        <h5>Tempo Médio de Ocupação</h5>
+                                                        {
+                                                            (() => {
+                                                                const { h, m } = decimalParaHorasMinutos(resposta.tempoMedio);
+                                                                return (
+                                                                    <h5>{h}H:{m}M</h5>
+                                                                );
+                                                            })()
+                                                        }
+                                                    </>
                                         }
-                                    </CardText>
+                                    </div>
                                 )
                             ) : (
                                 <h5>

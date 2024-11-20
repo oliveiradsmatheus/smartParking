@@ -53,26 +53,31 @@ export default class Controle_Sensor{
             const id = req.params.sen_id;
             const estado = req.params.sen_estado;
             if (id && !isNaN(parseInt(id)) && estado) {
-                const sensor = new Sensor(id, estado, "", "");
-                sensor.buscarSensor()
-                .then((resposta)=>{
-                    if(resposta && resposta.estado!='M'){
-                        sensor.atualizarESP()
-                        .then(() => {
-                            req.io.emit("Estado Atualizado");
-                            res.status(200).send("Estado Atualizado");
-                        })
-                        .catch((erro) => {
-                            res.status(500).send(erro);
-                        });
-                    }
-                    else{
-                        res.status(402).send("Sensor em Manutenção !!!, Req Invalida");        
-                    }
-                })
-                .catch((erro) => {
-                    res.status(500).send(erro);
-                });
+                if(estado === 'D' || estado === 'A' || estado === 'O' || estado === 'M'){
+                    const sensor = new Sensor(id, estado, "", "");
+                    sensor.buscarSensor()
+                    .then((resposta)=>{
+                        if(resposta && resposta.estado!='M'){
+                            sensor.atualizarESP()
+                            .then(() => {
+                                req.io.emit("Estado Atualizado");
+                                res.status(200).send("Estado Atualizado");
+                            })
+                            .catch((erro) => {
+                                res.status(500).send(erro);
+                            });
+                        }
+                        else{
+                            res.status(402).send("Sensor em Manutenção !!!, Req Invalida");        
+                        }
+                    })
+                    .catch((erro) => {
+                        res.status(500).send(erro);
+                    });
+                }
+                else {
+                    res.status(400).send("Dados invalidos: 'estado'="+estado+" é obrigatorio.");
+                }
             }
             else {
                 res.status(400).send("Dados invalidos: 'id'="+id+" e 'estado'="+estado+" sao obrigatorios.");

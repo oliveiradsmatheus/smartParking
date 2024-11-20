@@ -2,10 +2,11 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-String IP = "192.168.6.229";
+String IP = "https://luizzoff-pi1-smart-parking.vercel.app";
 unsigned long timeout = 5000;
 const char *REDE = "N5";
 const char *SENHA = "desconhecido123";
+HTTPClient http;
 
 bool WifiOn();
 void conectar();
@@ -24,36 +25,36 @@ void setup() {
 // cppcheck-suppress unusedFunction
 void loop() {
 	if (!WifiOn()) {
+		digitalWrite(2, LOW);
 		Serial.println("Reconectando ao WiFi...");
 		conectar();
 	}
-	if (Serial1.available()) {
+	if (Serial.available()) {
 		if (WifiOn()) {
-			String resp = Serial1.readString();
+			String resp = Serial.readString();
 			Serial.println("\n\n\nResposta Recebida Mega: " + resp);
 			if (resp != "") {
 				int httpResposta;
-				HTTPClient http;
 				String payload = "", estado = "", id = "";
 				if (resp[0] == '0') {	// PATCH para tabela sensor PATCH:ID_SENSOR:ESTADO
 					id = resp.substring(2, resp.indexOf(':', 2));	   		// Extrai id
 					estado = resp.substring(resp.indexOf(':', 2) + 1); 		// Extrai estado
 					Serial.println("Msg Mega: "+id+" / "+estado);
-					http.begin("http://" + IP + ":5000/sensores/" + id + "/" + estado);
+					http.begin(IP + "/sensores/" + id + "/" + estado);
 					httpResposta = http.PUT("");
 					ProcessarResposta_API(httpResposta, http);
 				}
 				else if (resp[0] == '1') {		// PATCH para tabela ocupacao PATCH:ID_Ocupacao
 					id = resp.substring(resp.indexOf(':') + 1);
 					Serial.println("Msg Mega: "+id);
-					http.begin("http://" + IP + ":5000/ocupacoes/" + id);
+					http.begin(IP + "/ocupacoes/" + id);
 					httpResposta = http.PUT("");
 					ProcessarResposta_API(httpResposta, http);
 				}
 				else if (resp[0] == '2') {		// POST para tabela ocupacao POST:ID_SENSOR
 					id = resp.substring(resp.indexOf(':') + 1);
 					Serial.println("Msg Mega: "+id);
-					http.begin("http://" + IP + ":5000/ocupacoes/" + id);
+					http.begin(IP + "/ocupacoes/" + id);
 					httpResposta = http.POST("");
 					ProcessarResposta_API(httpResposta, http);
 				}
@@ -64,6 +65,7 @@ void loop() {
 			}
 		}
 		else {
+			digitalWrite(2, LOW);
 			Serial1.print("WiFi Off");
 			Serial.println("Reconectando ao WiFi...");
 			conectar();
@@ -129,15 +131,18 @@ void conectar() {
 	WiFi.begin(REDE, SENHA);
 	while (WiFi.status() != WL_CONNECTED && t > 0) {
 		delay(1000);
+		Serial1.print("WiFi Off");
 		Serial.print(".");
 		t--;
 	}
 	if (WiFi.status() == WL_CONNECTED) {
+		http.setTimeout(5000); // Configurar 5 segundos como exemplo
 		Serial.println(WiFi.localIP());
 		digitalWrite(2, HIGH);
 		Serial.println("\nConectado...yeey :)");
 	}
 	else {
+		Serial1.print("WiFi Off");
 		Serial.println("\nFalha ao conectar ao WiFi");
 	}
 }

@@ -1,6 +1,7 @@
 .rua{
     background-image: url("../assets/images/rua.png");
-    background-size: cover;
+    background-size: contain;
+    background-repeat: round;
     display: flex;
     flex-direction: column;
     align-items: end;
@@ -9,5 +10,7 @@
 }
 
 .vaga{
-    height: 30vh;
+    max-width: 100%; /* Garante que a imagem não ultrapasse a largura do contêiner */
+    max-height: 30vh; /* Garante que a altura da imagem não ultrapasse 30% da altura da tela */
+    height: auto; /* Mantém a proporção da imagem */
 }

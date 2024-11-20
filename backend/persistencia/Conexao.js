@@ -12,7 +12,7 @@ export default async function conectar(){
             "database": process.env.DATABASE,
             "user": process.env.USER,
             "password": process.env.PASSWORD,
-            "connectionLimit": 10,
+            "connectionLimit": 20,
             "connectTimeout": 60000,
             "waitForConnections": true,
             "queueLimit": 20
