@@ -10,7 +10,9 @@
 }
 
 .vaga{
-    max-width: 100%; /* Garante que a imagem não ultrapasse a largura do contêiner */
-    max-height: 30vh; /* Garante que a altura da imagem não ultrapasse 30% da altura da tela */
+    width: 15vw; 
+    max-width: 150px;/* Garante que a imagem não ultrapasse a largura do contêiner */
+    min-width: 70px;
+    max-height: 40vh; /* Garante que a altura da imagem não ultrapasse 30% da altura da tela */
     height: auto; /* Mantém a proporção da imagem */
 }

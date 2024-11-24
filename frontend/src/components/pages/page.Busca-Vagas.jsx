@@ -33,7 +33,7 @@ export default function BuscaVagas() {
     return (
         <Pagina>
             <Container>
-                <Card style={{ width: "65rem" }} className="mx-auto m-4 pt-4 text-center bg-body-tertiary">
+                <Card style={{ width: "60vw" }} className="mx-auto m-4 pt-4 text-center bg-body-tertiary">
                     <InputGroup className="ps-4 pe-4 pb-4 pt-1">
                         <Form.Control
                             type="text"
@@ -44,7 +44,7 @@ export default function BuscaVagas() {
                         />
                     </InputGroup>
                 </Card>
-                <Card style={{ width: "65rem" }} className="mx-auto">
+                <Card style={{ width: "60vw" }} className="mx-auto">
                     <CardBody className="p-4 text-center">
                         {
                             busca.length > 0 ? (

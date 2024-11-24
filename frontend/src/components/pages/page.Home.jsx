@@ -11,7 +11,7 @@ export default function Home(props) {
                         SMART PARKING
                     </h2>
                 </Alert>
-                <Card style={{ width: "65rem" }} className="mx-auto">
+                <Card style={{ width: "65vw" }} className="mx-auto">
                     <div className="p-4 text-center">
                         <h4>
                             Seja bem-vindo ao Smart Parking, o estacionamento inteligente!
