@@ -91,7 +91,7 @@ export default function Relatorio(props) {
                     .finally(() => {
                         setCarregando(false); // Oculta o spinner após a resposta
                     });
-            }, 2000); // Delay de 2 segundos (2000 milissegundos)
+            }, 1000); // Delay de 2 segundos (2000 milissegundos)
         }
         else {
             setFormValidado(true);
@@ -226,7 +226,7 @@ export default function Relatorio(props) {
                 <Card className="mx-auto mt-3 pt-5 pb-5 text-center">
                     {
                         inicioConsulta ? (
-                            resposta.rua != null ? (
+                            resposta?.rua != null ? (
                                 buscado && Object.keys(resposta).length > 0 && (
                                     <div>
                                         <h4>{tempInfoRua.nome} - {tempInfoRua.bairro}</h4>
@@ -260,14 +260,7 @@ export default function Relatorio(props) {
                                                     :
                                                     <>
                                                         <h5>Tempo Médio de Ocupação</h5>
-                                                        {
-                                                            (() => {
-                                                                const { h, m } = decimalParaHorasMinutos(resposta.tempoMedio);
-                                                                return (
-                                                                    <h5>{h}H:{m}M</h5>
-                                                                );
-                                                            })()
-                                                        }
+                                                        <h5>{resposta?.horas || 0}H:{resposta?.minutos || 0}M</h5>
                                                     </>
                                         }
                                     </div>
