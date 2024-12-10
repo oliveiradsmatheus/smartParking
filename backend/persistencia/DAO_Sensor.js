@@ -8,7 +8,7 @@ export default class DAO_Sensor {
         let parametros = [];
         if(termo){
             sql += " WHERE rua_id LIKE ?";
-            parametros.push(`%${termo}%`);
+            parametros = [termo];
         }
         sql += " ORDER BY sen_ladoPos";
         const [dataBase, campos] = await conexao.execute(sql, parametros); // Execute a consulta
